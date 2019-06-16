@@ -14,37 +14,52 @@ apt-get -y install unzip wget bc
 apt-get -y install cron
 
 # install Java
-apt-get -y install openjdk-8-jre-headless
+apt-get update -q
+apt-get install -y openjdk-8-jre
 
 # install dependencies
 
-apt-get -y install python-{pip,virtualenv,yaml,jinja2}
+apt-get update
+apt-get -y install \
+	unzip \
+	wget \
+	python-{pip,tables,virtualenv,yaml,jinja2}
 
 # to be installed if recommended/suggested is false
 apt-get -y install python-setuptools python-wheel virtualenv
 
-
-# python-tables will install tables version 3.3
-# but it does not work. install pytables from pypi.
-pip install tables==3.4.4
-
 #start-web-dependencies
-apt-get -y install zlib1g-dev libjpeg-dev
+apt-get -y install zlib1g-dev
 apt-get -y install python-{pillow,numpy}
 #end-web-dependencies
 # install Ice
 #start-recommended-ice
-apt-get -y install zeroc-ice-all-runtime
-pip install https://github.com/ome/zeroc-ice-py-debian9/releases/download/0.1.0/zeroc_ice-3.6.4-cp27-cp27mu-linux_x86_64.whl
+apt-get update && \
+apt-get install -y -q\
+build-essential \
+db5.3-util \
+libbz2-dev \
+libdb++-dev \
+libdb-dev \
+libexpat-dev \
+libmcpp-dev \
+libssl-dev \
+mcpp \
+zlib1g-dev
+
+cd /tmp
+wget -q https://github.com/ome/zeroc-ice-ubuntu1804/releases/download/0.1.0/Ice-3.6.4-ubuntu1804-amd64.tar.xz
+tar xf Ice-3.6.4-ubuntu1804-amd64.tar.xz
+mv opt/Ice-3.6.4 /opt
+pip install https://github.com/ome/zeroc-ice-ubuntu1804/releases/download/0.1.0/zeroc_ice-3.6.4-cp27-cp27mu-linux_x86_64.whl
+echo /opt/Ice-3.6.4/lib/x86_64-linux-gnu > /etc/ld.so.conf.d/ice-x86_64.conf
+ldconfig
 #end-recommended-ice
 
 
 # install Postgres
-apt-get install -y gnupg
-echo "deb [arch=amd64] http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 apt-get update
-apt-get install -y postgresql-10
+apt-get -y install postgresql
 service postgresql start
 
 #end-step01
@@ -101,11 +116,13 @@ OMERO.server/bin/omero web config nginx --http "$WEBPORT" > OMERO.server/nginx.c
 #end-configure-nginx
 # As root, install nginx
 #start-nginx-install
-apt-get -y install nginx gunicorn
+apt-get update
+apt-get -y install nginx
 #end-nginx-install
 #start-nginx-admin
-mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.disabled
-cp OMERO.server/nginx.conf.tmp /etc/nginx/conf.d/omero-web.conf
+cp OMERO.server/nginx.conf.tmp /etc/nginx/sites-available/omero-web
+rm /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/omero-web /etc/nginx/sites-enabled/
 
 service nginx start
 #end-nginx-admin
