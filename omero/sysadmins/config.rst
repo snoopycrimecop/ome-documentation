@@ -24,7 +24,7 @@ using the :program:`omero config set` command:
 
 ::
 
-    $ omero config set <parameter> <value>
+    $ bin/omero config set <parameter> <value>
 
 When supplying a value with spaces or multiple elements, use **single
 quotes**. The quotes will not be saved as part of the value (see below).
@@ -34,7 +34,7 @@ mentioned), simply omit the value:
 
 ::
 
-    $ omero config set <parameter>
+    $ bin/omero config set <parameter>
 
 These options will be stored in a file: ``etc/grid/config.xml`` which
 you can read for reference. **DO NOT** edit this file directly.
@@ -43,7 +43,7 @@ You can also review all your settings by using:
 
 ::
 
-    $ omero config get
+    $ bin/omero config get
 
 which should return values without quotation marks.
 
@@ -51,7 +51,7 @@ A final useful option of :program:`omero config edit` is:
 
 ::
 
-    $ omero config edit
+    $ bin/omero config edit
 
 which will allow for editing the configuration in a system-default text
 editor.
@@ -2006,7 +2006,7 @@ omero.version
 ^^^^^^^^^^^^^
 Value dynamically set during the build
 
-Default: `5.5.5`
+Default: `5.5.6-SNAPSHOT`
 
 
 .. _web_configuration:
@@ -2210,7 +2210,7 @@ Default: `None`
 
 omero.web.login_redirect
 ^^^^^^^^^^^^^^^^^^^^^^^^
-Redirect to the given location after logging in. It only supports arguments for :djangodoc:`Django reverse function <ref/urlresolvers/#reverse>`. For example: ``'{"redirect": ["webindex"], "viewname": "load_template", "args":["userdata"], "query_string": {"experimenter": -1}}'``
+Redirect to the given location after logging in. It only supports arguments for :djangodoc:`Django reverse function <ref/urlresolvers/#django.core.urlresolvers.reverse>`. For example: ``'{"redirect": ["webindex"], "viewname": "load_template", "args":["userdata"], "query_string": {"experimenter": -1}}'``
 
 Default: `{}`
 
@@ -2226,7 +2226,7 @@ Default: `weblogin`
 
 omero.web.middleware
 ^^^^^^^^^^^^^^^^^^^^
-Warning: Only system administrators should use this feature. List of Django middleware classes in the form [{"class": "class.name", "index": FLOAT}]. See :djangodoc:`Django middleware <topics/http/middleware/>`. Classes will be ordered by increasing index
+Warning: Only system administrators should use this feature. List of Django middleware classes in the form [{"class": "class.name", "index": FLOAT}]. See https://docs.djangoproject.com/en/1.8/topics/http/middleware/. Classes will be ordered by increasing index
 
 Default: `[{"index": 1, "class": "django.middleware.common.BrokenLinkEmailsMiddleware"},{"index": 2, "class": "django.middleware.common.CommonMiddleware"},{"index": 3, "class": "django.contrib.sessions.middleware.SessionMiddleware"},{"index": 4, "class": "django.middleware.csrf.CsrfViewMiddleware"},{"index": 5, "class": "django.contrib.messages.middleware.MessageMiddleware"},{"index": 6, "class": "django.middleware.clickjacking.XFrameOptionsMiddleware"}]`
 
