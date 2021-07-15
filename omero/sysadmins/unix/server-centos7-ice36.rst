@@ -119,6 +119,15 @@ Configure the database and the location of the data directory:
     :start-after: #end-copy-omeroscript
     :end-before: #end-step04
 
+Weaker ciphers like ADH are disabled by default in new version of OpenSSL
+and TLS versions 1.0 and 1.1 have been dropped from JDK packages.
+This means that it is not possible to connect to an OMERO.server
+using any OMERO clients e.g. the Java Desktop client,
+the OMERO.web client or the CLI and import data. Run:
+
+.. literalinclude:: walkthrough/walkthrough_centos7.sh
+    :start-after: #start-seclevel
+    :end-before: #end-seclevel
 
 Running OMERO.server
 --------------------
