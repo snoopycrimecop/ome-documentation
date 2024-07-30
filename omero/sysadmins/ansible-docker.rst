@@ -157,4 +157,4 @@ Then rerun the command::
 
     $ ansible-playbook --become -i hosts.yml playbook.yml
 
-The configuration of the OMERO.server can also be achived `manually <https://omero.readthedocs.io/en/stable/sysadmins/unix/server-centos7-ice36.html#configuring-omero-server>`_, but note the :ref:`warning <Warningansible>`.
+The configuration of the OMERO.server can also be achived `manually <https://omero.readthedocs.io/en/stable/sysadmins/unix/server-rockylinux9-ice36.html#configuring-the-omero-server>`_, but note the :ref:`warning <Warningansible>`.
