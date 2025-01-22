@@ -2378,7 +2378,7 @@ in `github <https://github.com/ome/openmicroscopy>`_.
 
 We plan to include packages of the generated source code in future
 releases. Until then, it is possible to find our latest builds on 
-:jenkins:`jenkins <>` or to build them locally, although some of the
+:mergeci:`jenkins <>` or to build them locally, although some of the
 generated files are later overwritten by hand-written versions:
 
 -  model is located in ``components/tools/OmeroCpp/src/omero/model/``
