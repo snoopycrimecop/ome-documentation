@@ -1152,6 +1152,7 @@ Render Images
 -  **Get thumbnail**
 
 ::
+
     from PIL import Image
     from io import BytesIO
     # Thumbnail is created using the current rendering settings on the image
