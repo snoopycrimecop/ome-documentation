@@ -5,13 +5,13 @@ on:
     - cron: '* 0 * * *'
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     env:
       ICE_HOME: /opt/ice-3.6.5 # location where Ice is installed
     steps:
       - uses: actions/checkout@v4
       - name: Install Ice Java and Python binding
-        uses: ome/action-ice@v3
+        uses: ome/action-ice@main
       - name: Set up configuration
         run: |
           git config --global user.email github-actions@github.com
