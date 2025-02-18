@@ -43,7 +43,7 @@ POST, PUT and DELETE. These requests can then be protected as follows:
     <script type="text/javascript" src="{% static "webgateway/js/ome.csrf.js" %}"></script>
 
   For more details see
-  :djangodoc:`CSRF for ajax <ref/csrf/#ajax>`.
+  :djangodoc:`CSRF for ajax <howto/csrf/#using-csrf-protection-with-ajax>`.
 
 
 The Django framework also offers decorator methods that can help you protect your
