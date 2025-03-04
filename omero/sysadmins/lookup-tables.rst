@@ -1,7 +1,7 @@
 Look-up tables
 ==============
 
-OMERO ships with a number of look-up tables (LUTs) for use in rendering
+The OMERO.server ships with a number of look-up tables (LUTs) for use in rendering
 images. These are stored under ``$(OMERODIR)/lib/scripts/luts`` in the OMERO.server and
 are managed in a similar manner to server scripts.
 
