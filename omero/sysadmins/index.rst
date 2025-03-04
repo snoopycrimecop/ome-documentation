@@ -167,6 +167,7 @@ tasks on behalf of all users.
 
     server-permissions
     restricted-admins
+    lookup-tables
 
 .. seealso::
 
