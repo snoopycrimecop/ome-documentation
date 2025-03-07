@@ -419,6 +419,14 @@ your existing sessions are likely incompatible and you will need to follow
 the steps indicated at :ref:`clearing_session_store` to clear the sessions
 store.
 
+Look-up tables not displaying in OMERO.web
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you have added LUTs to the server and they are not displaying in OMERO.web,
+please see these
+`notes on LUTs caching <https://github.com/ome/omero-web?tab=readme-ov-file#luts-caching>`_.
+
+
 .. _client_performance:
 
 Troubleshooting performance issues with the clients
