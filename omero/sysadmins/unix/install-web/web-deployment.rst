@@ -54,6 +54,7 @@ Walkthroughs
 :doc:`walkthrough/omeroweb-install-ubuntu2004-ice3.6`
   Instructions for installing OMERO.web from scratch on Ubuntu 20.04 with Ice 3.6.
 
+
 .. toctree::
     :maxdepth: 1
     :titlesonly:
@@ -62,6 +63,7 @@ Walkthroughs
     walkthrough/omeroweb-install-rockylinux9-ice3.6
     walkthrough/omeroweb-install-ubuntu2004-ice3.6
     walkthrough/omeroweb-install-ubuntu2204-ice3.6
+    walkthrough/omeroweb-install-ubuntu2404-ice3.6
 
 .. note:: Support for Apache deployment has been dropped in 5.3.0.
     
