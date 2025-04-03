@@ -50,11 +50,6 @@ Improvements include:
 - Replace usage of Java Util Logging (JUL) by SLF4J
 - Include latest Bio-Formats version 8.1.1
 
-This version of the OMERO.server has been tested with:
-
-- OMERO.py 5.19.8
-- OMERO.web 5.29.0
-
 5.6.14 (November 2024)
 ----------------------
 
