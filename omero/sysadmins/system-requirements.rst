@@ -22,7 +22,7 @@ An OMERO.server specification for between 25-50 users might be:
 A specification for a server future-proofed for 3-4 years might be:
 
 -  Intel Xeon Gold 6426 Processor
--  8x 32 GB DDR5-4800
+-  32 GB DDR5-4800
 -  2 x 2 TB SSD RAID1 for OS, PostgreSQL DB, scratch, log files, etc.
 -  10 GbE connectivity to a separate fileshare for the OMERO binary repository
 
