@@ -373,6 +373,8 @@ def copy_legacy_redirects(app, exception):
     redirect_files = [
         'sysadmins/unix/install-web/walkthrough/omeroweb-install-ubuntu1804-ice3.6.html',
         'sysadmins/unix/server-ubuntu1804-ice36.html',
+        'sysadmins/unix/install-web/walkthrough/omeroweb-install-ubuntu2004-ice3.6.html',
+        'sysadmins/unix/server-ubuntu2004-ice36.html',
         'sysadmins/unix/install-web/walkthrough/omeroweb-install-debian9-ice3.6.html',
         'sysadmins/unix/server-debian9-ice36.html',
         'sysadmins/unix/install-web/walkthrough/omeroweb-install-debian10-ice3.6.html',

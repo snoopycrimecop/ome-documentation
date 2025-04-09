@@ -43,7 +43,6 @@ Since 5.6, a new :envvar:`OMERODIR` variable is used, you should first unset :en
     :hidden:
 
     server-rockylinux9-ice36
-    server-ubuntu2004-ice36
     server-ubuntu2204-ice36
     server-ubuntu2404-ice36
     server-install-homebrew
