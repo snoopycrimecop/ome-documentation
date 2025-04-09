@@ -20,15 +20,15 @@ Since 5.6, a new :envvar:`OMERODIR` variable is used, you should first unset :en
   Instructions for installing OMERO.server from scratch on
   RHEL 9/Rocky Linux 9 with Ice 3.6 and Python 3.9.
 
-:doc:`server-ubuntu2204-ice36`
+:doc:`server-ubuntu2404-ice36`
   Instructions for installing OMERO.server from scratch on
-  Ubuntu 22.04 with Ice 3.6 and Python 3.10.
+  Ubuntu 24.04 with Ice 3.6 and Python 3.12.
 
 **Supported:**
 
-:doc:`server-ubuntu2004-ice36`
+:doc:`server-ubuntu2204-ice36`
   Instructions for installing OMERO.server from scratch on
-  Ubuntu 20.04 with Ice 3.6 and Python 3.8.
+  Ubuntu 22.04 with Ice 3.6 and Python 3.10.
 
 **Development:**
 
@@ -45,6 +45,7 @@ Since 5.6, a new :envvar:`OMERODIR` variable is used, you should first unset :en
     server-rockylinux9-ice36
     server-ubuntu2004-ice36
     server-ubuntu2204-ice36
+    server-ubuntu2404-ice36
     server-install-homebrew
 
 Prerequisites
