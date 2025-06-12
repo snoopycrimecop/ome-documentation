@@ -451,8 +451,8 @@ may be used if downloaded separately.
 NGINX
 -----
 
-`General overview <https://nginx.org/en/download.html>`__ and `roadmap
-<https://trac.nginx.org/nginx/roadmap>`__
+`General overview <https://nginx.org/en/download.html>`__ and `Code
+<https://github.com/nginx/nginx>`__
 
 OMERO support policies
 ^^^^^^^^^^^^^^^^^^^^^^
