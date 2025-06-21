@@ -145,10 +145,14 @@ Linux (Ubuntu)
     * - 20.04 LTS
       - Apr 2020
       - Apr 2030
-      - |Deprecated|
+      - |Dropped|
     * - 22.04 LTS
       - Apr 2022
       - Apr 2032
+      - |Supported|
+    * - 24.04 LTS
+      - Apr 2024
+      - Apr 2034
       - |Recommended|
 
 
@@ -231,7 +235,7 @@ OMERO support policies
     * - 16
       - Sep 2023
       - Nov 2028
-      - |Supported|
+      - |Recommended|
 
 Version provided by distribution
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -246,19 +250,19 @@ If no version is provided, a suitable repository is indicated.
       - Ubuntu
     * - 12
       - 9 (`postgresql <https://download.postgresql.org/pub/repos/yum/12/redhat/rhel-9-x86_64/>`__)
-      - 22.04 (`postgresql <https://apt.postgresql.org/pub/repos/apt/dists/jammy-pgdg/>`__)
+      - 24.04 (`postgresql <https://apt.postgresql.org/pub/repos/apt/dists/noble-pgdg/>`__)
     * - 13
       - 9
-      - 22.04 (`postgresql <https://apt.postgresql.org/pub/repos/apt/dists/jammy-pgdg/>`__)
+      - 24.04 (`postgresql <https://apt.postgresql.org/pub/repos/apt/dists/noble-pgdg/>`__)
     * - 14
       - 9 (`postgresql <https://yum.postgresql.org/14/redhat/rhel-9-x86_64/>`__)
-      - 22.04
+      - 24.04
     * - 15
       - 9 (`postgresql <https://yum.postgresql.org/15/redhat/rhel-9-x86_64/>`__)
-      - 22.04 (`postgresql <https://apt.postgresql.org/pub/repos/apt/dists/jammy-pgdg/>`__)
+      - 24.04 (`postgresql <https://apt.postgresql.org/pub/repos/apt/dists/noble-pgdg/>`__)
     * - 16
       - 9 (`postgresql <https://yum.postgresql.org/16/redhat/rhel-9-x86_64/>`__)
-      - 22.04 (`postgresql <https://apt.postgresql.org/pub/repos/apt/dists/jammy-pgdg/>`__)
+      - 24.04 (`postgresql <https://apt.postgresql.org/pub/repos/apt/dists/noble-pgdg/>`__)
 
 
 The PostgreSQL project provides `packages
@@ -309,12 +313,12 @@ OMERO support policies
     * - 3.11
       - Oct 2022
       - Oct 2027
-      - |Upcoming|
+      - |Supported|
       - `PEP 664 <https://peps.python.org/pep-0664/>`__
     * - 3.12
       - Oct 2023
       - Oct 2028
-      - |Upcoming|
+      - |Supported|
       - `PEP 693 <https://peps.python.org/pep-0693/>`__
 
 
@@ -331,9 +335,9 @@ Version provided by distribution
     * - 3.9
       - 9
       - 
-    * - 3.10
+    * - 3.12
       - 
-      - 22.04
+      - 24.04
 
 The Django version used by OMERO.web (5.23.0) requires Python 3.8 or higher.
 
@@ -385,7 +389,7 @@ If no version is provided, a suitable repository is indicated.
       - Ubuntu
     * - 3.6
       - 9 (`zeroc-ice-rhel9-x86_64 <https://github.com/glencoesoftware/zeroc-ice-rhel9-x86_64>`__)
-      - 22.04 (`zeroc-ice-ubuntu2204-x86_64  <https://github.com/glencoesoftware/zeroc-ice-ubuntu2204-x86_64>`__)
+      - 24.04 (`zeroc-ice-ubuntu2404-x86_64  <https://github.com/glencoesoftware/zeroc-ice-ubuntu2404-x86_64>`__)
 
 .. _version requirements java:
 
@@ -438,7 +442,7 @@ Version provided by distribution
       - Ubuntu
     * - 11
       - 9
-      - 22.04
+      - 24.04
     * - Details
       - 
       - `Reference <https://packages.ubuntu.com/search?keywords=jdk&searchon=names&suite=all&section=all>`__
@@ -494,7 +498,7 @@ If no version is provided, a suitable repository is indicated.
       - N/A
     * - 1.24
       - 9 (`repo <http://nginx.org/packages/centos/9/x86_64/>`__)
-      - 22.04
+      - 24.04
 
 .. _support-levels:
 
