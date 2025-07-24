@@ -1,7 +1,7 @@
 OMERO.server Websockets
 =======================
 
-OMERO 5.5.0 includes experimental support for websocket connections.
+Since version 5.5.0, OMERO includes support for websocket connections.
 This allows clients to connect to OMERO.server over HTTP/S using the Ice
 protocol (note: this is not the same as the
 :doc:`OMERO.web or JSON APIs <../developers/json-api>`).
