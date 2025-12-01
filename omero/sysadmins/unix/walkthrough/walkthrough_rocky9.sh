@@ -6,10 +6,7 @@ set -e -u -x
 dnf -y install java-11-openjdk
 
 # install dependencies
-dnf -y install python3 unzip bzip2 wget bc openssl
-#end-step01
-# install Ice
-#start-recommended-ice
+# Enable CodeReady Linux Builder repository
 if grep -q "Rocky" /etc/redhat-release; then
   dnf -y install 'dnf-command(config-manager)'
   dnf config-manager --set-enabled crb
@@ -17,6 +14,12 @@ fi
 if grep -q "Red Hat" /etc/redhat-release; then
   subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
 fi
+
+dnf -y upgrade
+dnf -y install python3.12 tar unzip bzip2 wget bc openssl
+#end-step01
+# install Ice
+#start-recommended-ice
 dnf -y install expat libdb-cxx
 
 cd /tmp
@@ -31,21 +34,20 @@ ldconfig
 # install Postgres
 dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
 dnf -qy module disable postgresql
-dnf -y install postgresql15-server postgresql15
-PGSETUP_INITDB_OPTIONS=--encoding=UTF8  /usr/pgsql-15/bin/postgresql-15-setup initdb
+dnf -y install postgresql16-server postgresql16
+PGSETUP_INITDB_OPTIONS=--encoding=UTF8  /usr/pgsql-16/bin/postgresql-16-setup initdb
 
-sed -i.bak -re 's/^(host.*)ident/\1md5/' /var/lib/pgsql/15/data/pg_hba.conf
-sed -i 's/ ident/ trust/g' /var/lib/pgsql/15/data/pg_hba.conf
-systemctl start postgresql-15
-systemctl enable postgresql-15
+
+sed -i.bak -re 's/^(host.*)ident/\1md5/' /var/lib/pgsql/16/data/pg_hba.conf
+sed -i 's/ ident/ trust/g' /var/lib/pgsql/16/data/pg_hba.conf
+systemctl start postgresql-16
+systemctl enable postgresql-16
 #end-step01
 
 #start-step02: As root, create a local omero-server system user and directory for the OMERO repository
 useradd -mr omero-server
 # Give a password to the omero user
 # e.g. passwd omero-server
-chmod a+X ~omero-server
-
 mkdir -p "$OMERO_DATA_DIR"
 chown omero-server "$OMERO_DATA_DIR"
 #end-step02
@@ -58,13 +60,13 @@ psql -P pager=off -h localhost -U "$OMERO_DB_USER" -l
 
 #start-step03bis: As root, create a virtual env and install dependencies
 # Create a virtual env
-python3 -mvenv $VENV_SERVER
+python3.12 -mvenv $VENV_SERVER
 
 # Upgrade pip
 $VENV_SERVER/bin/pip install --upgrade pip
 
 # Install the Ice Python binding
-$VENV_SERVER/bin/pip install https://github.com/glencoesoftware/zeroc-ice-py-rhel9-x86_64/releases/download/20230830/zeroc_ice-3.6.5-cp39-cp39-linux_x86_64.whl
+$VENV_SERVER/bin/pip install https://github.com/glencoesoftware/zeroc-ice-py-linux-x86_64/releases/download/20240202/zeroc_ice-3.6.5-cp312-cp312-manylinux_2_28_x86_64.whl
 # Install server dependencies
 $VENV_SERVER/bin/pip install omero-server
 #end-step03bis
@@ -112,7 +114,7 @@ chmod go-rwx $OMERODIR/etc $OMERODIR/var
 # chmod go-rwx "$OMERO_DATA_DIR"
 #end-step07
 #start-step08: As root, configure
-cp omero-server-systemd.service /etc/systemd/system/omero-server.service
+wget https://omero.readthedocs.io/en/stable/_downloads/08850daa9012dfe7b7d4a90dc76c1b83/omero-server-systemd.service -O /etc/systemd/system/omero-server.service
 
 systemctl daemon-reload
 

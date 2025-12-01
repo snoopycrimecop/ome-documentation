@@ -303,7 +303,7 @@ OMERO support policies
     * - 3.9
       - Oct 2020
       - Oct 2025
-      - |Recommended|
+      - |Supported|
       - `PEP 596 <https://peps.python.org/pep-0596/>`__
     * - 3.10
       - Oct 2021
@@ -318,7 +318,7 @@ OMERO support policies
     * - 3.12
       - Oct 2023
       - Oct 2028
-      - |Supported|
+      - |Recommended|
       - `PEP 693 <https://peps.python.org/pep-0693/>`__
 
 
