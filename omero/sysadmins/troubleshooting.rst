@@ -456,6 +456,46 @@ To resolve this, define the :envvar:`OMERO_TMPDIR` environment variable
 to point at a temporary directory located on the local file system
 (e.g. :file:`/tmp/omero`).
 
+
+tmp directory mounted with noexec permissions
+---------------------------------------------
+
+Under some conditions, the OMERO.server or the data import can fail with exceptions like::
+
+    java.lang.NoClassDefFoundError: Could not initialize class com.sun.jna.NativeLong
+        at com.sun.jna.ptr.NativeLongByReference.<init>(NativeLongByReference.java:19)
+
+or::
+
+    java.lang.UnsatisfiedLinkError: 'void org.libjpegturbo.turbojpeg.TJDecompressor.init()'
+        at org.libjpegturbo.turbojpeg.TJDecompressor.init(Native Method)
+
+These errors can be caused by the `/tmp` partition might be mounted with noexec permissions.
+This configuration follows security best practices from the CIS benchmarks or the NIST SP 800-53
+framework and prevents Java from using native shared libraries by default, which is requirement
+for the reading of some file formats.
+
+For older versions of OMERO.server and OMERO.py, the workaround is to set the `java.io.tmpdir`
+system property to point at a temporary directory with the appropriate permissions.
+
+For OMERO.server 5.6.16 and below, this property should be achieved using :config:`omero.jvmcfg.append`::
+
+   mkdir -p /opt/omero/OMERO.current/var/tmp
+   omero config set -- omero.jvmcfg.append -Djava.io.tmpdir=/opt/omero/OMERO.current/var/tmp
+
+For imports using OMERO.py 5.21.2 and earlier, this property should be set using the
+:envvar:`JAVA_OPTS` environment variable::
+
+   export JAVA_OPTS="-Djava.io.tmpdir=/opt/omero/OMERO.current/var/tmp/"
+   omero import ...
+
+Starting with OMERO.server 5.6.17 and OMERO.py 5.21.3, the application should internally use
+a local temporary directory other than `/tmp` and these workarounds can be removed be unnecessay.
+
+.. seealso::
+
+    https://github.com/ome/openmicroscopy/issues/6439
+
 Other issues
 ------------
 
