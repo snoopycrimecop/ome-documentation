@@ -28,21 +28,29 @@ Installing prerequisites
 
 Enable CodeReady Linux Builder repository:
 
-Redhat:
+Redhat::
 
-    ``subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms``
+    subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
 
 
-Rocky:
+Rocky::
 
-    ``dnf -y install 'dnf-command(config-manager)'``
+    dnf -y install 'dnf-command(config-manager)'
 
-    ``dnf config-manager --set-enabled crb``
+    dnf config-manager --set-enabled crb
 
 
 Install dependencies::
 
-    cp nginx.repo /etc/yum.repos.d/
+    cat <<EOF > /etc/yum.repos.d/nginx.repo
+    [nginx-stable]
+    name=nginx stable repo
+    baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
+    gpgcheck=1
+    enabled=1
+    gpgkey=https://nginx.org/keys/nginx_signing.key
+    module_hotfixes=true
+    EOF
 
     dnf -y install git
 
