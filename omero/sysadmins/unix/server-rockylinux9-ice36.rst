@@ -49,7 +49,7 @@ To install Ice |iceversion|:
     :start-after: #start-recommended-ice
     :end-before: #end-recommended-ice
 
-To install PostgreSQL 15:
+To install PostgreSQL:
 
 .. literalinclude:: walkthrough/walkthrough_rocky9.sh
     :start-after: # install Postgres
@@ -135,8 +135,8 @@ is available.
 Copy the ``systemd.service`` file and configure the service:
 
 .. literalinclude:: walkthrough/walkthrough_rocky9.sh
-    :start-after: #start-step06
-    :end-before: #end-step06
+    :start-after: #start-step08
+    :end-before: #end-step08
 
 You can then start up the service.
 
