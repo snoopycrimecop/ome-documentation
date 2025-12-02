@@ -7,7 +7,7 @@ OMERO.web installation on Rocky Linux 9 and IcePy 3.6
 Please first read :doc:`../../server-rockylinux9-ice36`.
 
 
-This is an example walkthrough for installing OMERO.web in a **virtual environment** using a dedicated system user. Installing OMERO.web in a virtual environment is the preferred way. For convenience in this walkthrough, we will use the **omero-web system user** and define the main OMERO.web configuration options as environment variables. Since 5.6, a new :envvar:`OMERODIR` variable is used, you should first unset :envvar:`OMERO_HOME` (if set) before beginning the installation process. By default, Python 3.9 is installed.
+This is an example walkthrough for installing OMERO.web in a **virtual environment** using a dedicated system user. Installing OMERO.web in a virtual environment is the preferred way. For convenience in this walkthrough, we will use the **omero-web system user** and define the main OMERO.web configuration options as environment variables. Since 5.6, a new :envvar:`OMERODIR` variable is used, you should first unset :envvar:`OMERO_HOME` (if set) before beginning the installation process. By default, Python 3.12 is installed.
 
 
 **The following steps are run as root.**
@@ -26,16 +26,29 @@ Installing prerequisites
 
 **The following steps are run as root.**
 
+Enable CodeReady Linux Builder repository:
+
+Redhat:
+
+    ``subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms``
+
+
+Rocky:
+
+    ``dnf -y install 'dnf-command(config-manager)'``
+
+    ``dnf config-manager --set-enabled crb``
+
 
 Install dependencies::
 
-        cp nginx.repo /etc/yum.repos.d/
+    cp nginx.repo /etc/yum.repos.d/
 
     dnf -y install git
 
     dnf -y install unzip
 
-    dnf -y install python3
+    dnf -y install python3.12
 
     dnf -y install nginx
 
@@ -56,14 +69,14 @@ Creating a virtual environment
 
 Create the virtual environment. This is the recommended way to install OMERO.web::
 
-    python3 -mvenv /opt/omero/web/venv3
+    python3.12 -mvenv /opt/omero/web/venv3
 
 
 
 
 Install ZeroC IcePy 3.6::
 
-    /opt/omero/web/venv3/bin/pip install https://github.com/glencoesoftware/zeroc-ice-py-rhel9-x86_64/releases/download/20230830/zeroc_ice-3.6.5-cp39-cp39-linux_x86_64.whl
+    /opt/omero/web/venv3/bin/pip install https://github.com/glencoesoftware/zeroc-ice-py-linux-x86_64/releases/download/20240202/zeroc_ice-3.6.5-cp312-cp312-manylinux_2_28_x86_64.whl
 
 
 Upgrade pip and install OMERO.web::
