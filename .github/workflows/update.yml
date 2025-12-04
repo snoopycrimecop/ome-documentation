@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       ICE_HOME: /opt/ice-3.6.5 # location where Ice is installed
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
       - name: Install Ice Java and Python binding
@@ -21,13 +22,14 @@ jobs:
           cd ..
           WORKSPACE=$(pwd)
           echo "space="${WORKSPACE} >> $GITHUB_ENV
-          git clone https://github.com/ome/openmicroscopy OMERO.server
           git clone https://github.com/ome/omeroweb-install
           git clone https://github.com/ome/omero-install
-      - name: Build OMERO.server
+      - name: Download latest release of OMERO.server
         run: |
-          cd $space/OMERO.server
-          ./build.py
+          cd ..
+          gh release download -R ome/openmicroscopy --pattern "OMERO.server*zip"
+          unzip OMERO.server*.zip && rm OMERO.server*.zip
+          ln -s OMERO.server* OMERO.server
       - name: Create Virtual environment
         run: |
           python -m venv $space/.venv3
