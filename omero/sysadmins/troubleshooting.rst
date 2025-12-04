@@ -478,7 +478,7 @@ for the reading of some file formats.
 For older versions of OMERO.server and OMERO.py, the workaround is to set the `java.io.tmpdir`
 system property to point at a temporary directory with the appropriate permissions.
 
-For OMERO.server 5.6.16 and below, this property should be achieved using :config:`omero.jvmcfg.append`::
+For OMERO.server 5.6.16 and below, this property should be achieved using :property:`omero.jvmcfg.append`::
 
    mkdir -p /opt/omero/OMERO.current/var/tmp
    omero config set -- omero.jvmcfg.append -Djava.io.tmpdir=/opt/omero/OMERO.current/var/tmp
