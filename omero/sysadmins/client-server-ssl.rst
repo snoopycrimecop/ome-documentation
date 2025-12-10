@@ -28,14 +28,15 @@ Copy :file:`server.p12` to the OMERO.server host, for instance to :file:`/etc/ss
 
 External access to OMERO.server is managed by the Glacier2 component which can be configured as follows::
 
-    omero config set omero.glacier2.IceSSL.Ciphers HIGH
+    omero config set omero.glacier2.IceSSL.Ciphers "HIGH:!DHE"
     # Look for certificates in this directory, you can omit and use the full path to files instead
     omero config set omero.glacier2.IceSSL.DefaultDir /etc/ssl/omero/
+    omero config set omero.glacier2.IceSSL.CAs server.pem
     omero config set omero.glacier2.IceSSL.CertFile server.p12
     omero config set omero.glacier2.IceSSL.Password secret
-    omero config set omero.glacier2.IceSSL.Protocols tls1_2
-    omero config set omero.glacier2.IceSSL.ProtocolVersionMin tls1_2
-    omero config set omero.glacier2.IceSSL.ProtocolVersionMax tls1_2
+    omero config set omero.glacier2.IceSSL.Protocols TLS1_2,TLS1_3
+    omero config set omero.glacier2.IceSSL.ProtocolVersionMin TLS1_2
+    omero config set omero.glacier2.IceSSL.ProtocolVersionMax TLS1_3
 
 
 Restart OMERO.server.
