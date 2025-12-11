@@ -228,7 +228,7 @@ Copy the generated configuration file into the NGINX configuration directory, di
     systemctl start nginx
 
 
-For production servers you may need to add additional directives to the configuration file, for example to enable `HTTPS <https://nginx.org/en/docs/http/configuring_https_servers.html>`_. As an alternative to manually modifying the generated file you can generate a minimal configuration and include this in your own manually created NGINX file, such as :file:`/etc/nginx/conf.d/omero-web.conf`:
+For production servers you may need to add additional directives to the configuration file, for example to enable `HTTPS <https://nginx.org/en/docs/http/configuring_https_servers.html>`_. As an alternative to manually modifying the generated file you can generate a minimal configuration and include this in your own manually created NGINX file, such as :file:`/etc/nginx/conf.d/omero-web.conf` (Run as the omero-web system user):
 
     ::
 
