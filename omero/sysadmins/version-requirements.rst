@@ -67,11 +67,11 @@ NGINX
 
     * - nginx
       - OMERO 5.6
-    * - 1.23
-      - |Supported|
-    * - 1.24
+    * - 1.27
+      - |Dropped|
+    * - 1.28
       - |Recommended|
-    * - 1.25
+    * - 1.29
       - |Upcoming|
 
 Operating system support
@@ -298,12 +298,12 @@ OMERO support policies
     * - 3.8
       - Oct 2018
       - Oct 2024
-      - |Supported|
+      - |Dropped|
       - `PEP 569 <https://peps.python.org/pep-0569/>`__
     * - 3.9
       - Oct 2020
       - Oct 2025
-      - |Supported|
+      - |Dropped|
       - `PEP 596 <https://peps.python.org/pep-0596/>`__
     * - 3.10
       - Oct 2021
@@ -419,9 +419,9 @@ OMERO support policies
       - Nov 2026
       - |Deprecated|
       - `Reference <https://access.redhat.com/articles/1299013>`__
-    * - 11
-      - Sep 2018
-      - Oct 2024
+    * - 11 (Eclipse Temurin)
+      - Aug 2021
+      - Oct 2027
       - |Recommended|
       - `Reference <https://access.redhat.com/articles/1299013>`__
     * - 17
@@ -463,22 +463,15 @@ OMERO support policies
 
 .. list-table::
     :header-rows: 1
+    :align: left
 
-    * - Version
-      - Release date
-      - Supported until
+    * - nginx
       - OMERO 5.6
-    * - 1.23
-      - Jun 2022
-      - May 2023
-      - |Supported|
-    * - 1.24
-      - Apr 2023
-      - TBA
+    * - 1.27
+      - |Dropped|
+    * - 1.28
       - |Recommended|
-    * - 1.25
-      - May 2023
-      - TBA
+    * - 1.29
       - |Upcoming|
 
 
