@@ -219,11 +219,11 @@ OMERO support policies
     * - 12
       - Sep 2019
       - Nov 2024
-      - |Supported|
+      - |Dropped|
     * - 13
       - Sep 2020
       - Nov 2025
-      - |Supported|
+      - |Dropped|
     * - 14
       - Sep 2021
       - Nov 2026
@@ -236,6 +236,10 @@ OMERO support policies
       - Sep 2023
       - Nov 2028
       - |Recommended|
+    * - 17
+      - Sep 2024
+      - Nov 2029
+      - |Upcoming|
 
 Version provided by distribution
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
