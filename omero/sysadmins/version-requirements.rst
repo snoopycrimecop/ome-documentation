@@ -339,7 +339,7 @@ Version provided by distribution
       - 9
       - 
     * - 3.12
-      - 
+      - 9.4+
       - 24.04
 
 .. _ice-requirements:
