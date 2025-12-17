@@ -58,21 +58,6 @@ Rationale: OMERO is tested on 64-bit systems only.
     * - 64-bit
       - |Recommended|
 
-NGINX
------
-
-.. list-table::
-    :header-rows: 1
-    :align: left
-
-    * - nginx
-      - OMERO 5.6
-    * - 1.27
-      - |Dropped|
-    * - 1.28
-      - |Recommended|
-    * - 1.29
-      - |Upcoming|
 
 Operating system support
 ========================
@@ -240,6 +225,10 @@ OMERO support policies
       - Sep 2024
       - Nov 2029
       - |Upcoming|
+    * - 18
+      - Sep 2025
+      - Nov 2030
+      - |Upcoming|
 
 Version provided by distribution
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -324,6 +313,16 @@ OMERO support policies
       - Oct 2028
       - |Recommended|
       - `PEP 693 <https://peps.python.org/pep-0693/>`__
+    * - 3.13
+      - Oct 2024
+      - Oct 2029
+      - |Upcoming|
+      - `PEP 719 <https://peps.python.org/pep-0719/>`__
+    * - 3.14
+      - Oct 2025
+      - Oct 2030
+      - |Upcoming|
+      - `PEP 745 <https://peps.python.org/pep-0745/>`__
 
 
 Version provided by distribution
@@ -342,8 +341,6 @@ Version provided by distribution
     * - 3.12
       - 
       - 24.04
-
-The Django version used by OMERO.web (5.23.0) requires Python 3.8 or higher.
 
 .. _ice-requirements:
 
@@ -423,7 +420,7 @@ OMERO support policies
       - Nov 2026
       - |Deprecated|
       - `Reference <https://access.redhat.com/articles/1299013>`__
-    * - 11 (Eclipse Temurin)
+    * - 11
       - Aug 2021
       - Oct 2027
       - |Recommended|
