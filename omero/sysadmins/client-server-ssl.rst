@@ -88,7 +88,6 @@ Multiple ``CN`` can be specified:
 Further information
 -------------------
 
-- https://doc.zeroc.com/technical-articles/glacier2-articles/teach-yourself-glacier2-in-10-minutes#TeachYourselfGlacier2in10Minutes-UsingSSLwithGlacier2
 - https://doc.zeroc.com/ice/3.6/ice-plugins/icessl/configuring-icessl
 - https://doc.zeroc.com/ice/3.6/ice-plugins/icessl/setting-up-a-certificate-authority
 - https://doc.zeroc.com/ice/3.6/property-reference/icessl
