@@ -242,7 +242,7 @@ If no version is provided, a suitable repository is indicated.
       - CentOS/RHEL
       - Ubuntu
     * - 12
-      - 9 (`postgresql <https://download.postgresql.org/pub/repos/yum/12/redhat/rhel-9-x86_64/>`__)
+      - 9
       - 24.04 (`postgresql <https://apt.postgresql.org/pub/repos/apt/dists/noble-pgdg/>`__)
     * - 13
       - 9
