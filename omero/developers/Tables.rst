@@ -27,19 +27,20 @@ for the OMERO.tables API primarily defines two service interfaces and a type
 hierarchy.
 
 
-class :class:`omero.grid.Table`
+:py:class:`omero.grid.Table`
+
     The central service for dealing with tabular data, described
     :ref:`below <tables-omero-grid-Table>`.
 
-.. class:: omero.grid.Tables
+.. py:class:: omero.grid.Tables
 
     An internal service used for managing table services, and can be ignored
     for almost all purposes.
 
-.. class:: omero.grid.Column
+.. py:class:: omero.grid.Column
 
     The base class for column types which permit returning arrays of
-    columnar values (Ice_ doesn't provide an :class:`Any` type, so it is
+    columnar values (Ice_ doesn't provide an :py:class:`Any` type, so it is
     necessary to group values of the same type). All columns in a table
     must have the same number of rows.
 
@@ -57,25 +58,25 @@ Single value columns
 
 These columns store a single value in each row.
 
-.. class:: omero.grid.FileColumn(name, description, [values])
+.. py:class:: omero.grid.FileColumn(name, description, [values])
            omero.grid.ImageColumn(name, description, [values])
            omero.grid.RoiColumn(name, description, [values])
            omero.grid.WellColumn(name, description, [values])
            omero.grid.PlateColumn(name, description, [values])
 
-    Id-based (`long`) columns which reference :class:`omero.model.File`,
-    :class:`~Image`, :class:`~Roi`, :class:`~Well` and :class:`~Plate`
+    Id-based (`long`) columns which reference :py:class:`omero.model.File`,
+    :py:class:`~Image`, :py:class:`~Roi`, :py:class:`~Well` and :py:class:`~Plate`
     instances respectively.
 
-.. class:: omero.grid.BoolColumn(name, description, [values])
+.. py:class:: omero.grid.BoolColumn(name, description, [values])
 
     A value column with `bool` (non-null) values.
 
-.. class:: omero.grid.LongColumn(name, description, [values])
+.. py:class:: omero.grid.LongColumn(name, description, [values])
 
     A value column with `long` (non-null, 64-bit) values.
 
-.. class:: omero.grid.DoubleColumn(name, description, [values])
+.. py:class:: omero.grid.DoubleColumn(name, description, [values])
 
     A value column with `double` (non-null, 64-bit) values.
 
@@ -87,12 +88,12 @@ These columns store a single value in each row.
     :param [] values: A list of values (one value per row) used to initialize a
         column (optional).
 
-    .. attribute:: values
+    .. py:attribute:: values
 
         A class member holding the list of values stored in the column.
 
 
-.. class:: omero.grid.StringColumn(name, description, size, [ values])
+.. py:class:: omero.grid.StringColumn(name, description, size, [ values])
 
     A value column which holds strings
 
@@ -111,15 +112,15 @@ Array value columns
 
 These columns store an array in each row.
 
-.. class:: omero.grid.FloatArrayColumn(name, description, size, [values])
+.. py:class:: omero.grid.FloatArrayColumn(name, description, size, [values])
 
     A value column with fixed-width arrays of `float` (32 bit) values.
 
-.. class:: omero.grid.DoubleArrayColumn(name, description, size, [values])
+.. py:class:: omero.grid.DoubleArrayColumn(name, description, size, [values])
 
     A value column with fixed-width arrays of `double` (64 bit) values.
 
-.. class:: omero.grid.LongArrayColumn(name, description, size, [values])
+.. py:class:: omero.grid.LongArrayColumn(name, description, size, [values])
 
     A value column with fixed-width arrays of `long` (64 bit) values.
 
@@ -129,14 +130,14 @@ These columns store an array in each row.
 
     :param long size: The width of the array, `>= 1`
 
-    :param [][] values: A list of arrays, each of length :attr:`size`
+    :param [][] values: A list of arrays, each of length :py:attr:`size`
         (optional).
 
 
 .. warning::
     The OMERO.tables service currently does limited validation of string
     and array lengths. When adding or modifying data it is essential that the
-    :attr:`size` parameter of a column matches that of the underlying table.
+    :py:attr:`size` parameter of a column matches that of the underlying table.
 
 .. warning::
     Array value columns should be considered experimental for now.
@@ -147,48 +148,48 @@ These columns store an array in each row.
 Main methods
 ^^^^^^^^^^^^
 
-.. class:: omero.grid.Data
+.. py:class:: omero.grid.Data
 
     Holds the data retrieved from a table, also used to update a table.
 
-    .. attribute:: lastModification
+    .. py:attribute:: lastModification
 
         The timestamp of the last update to the table.
 
-    .. attribute:: rowNumbers
+    .. py:attribute:: rowNumbers
 
         The row indices of the values retrieved from the table.
 
-    .. attribute:: columns
+    .. py:attribute:: columns
 
         A list of columns
 
 
 .. _tables-omero-grid-Table:
 
-.. class:: omero.grid.Table
+.. py:class:: omero.grid.Table
 
     The main interface to the Tables service.
 
-    .. method:: getHeaders()
+    .. py:method:: getHeaders()
 
         :return: An empty list of columns describing the table. Fill in the
-            :attr:`values` of these columns to add a new row to the table.
+            :py:attr:`values` of these columns to add a new row to the table.
 
-    .. method:: getNumberOfRows()
+    .. py:method:: getNumberOfRows()
 
         :return: The number of rows in the table.
 
-    .. method:: readCoordinates(rowNumbers)
+    .. py:method:: readCoordinates(rowNumbers)
 
         Read a set of entire rows in the table.
 
         :param long[] rowNumbers: A list of row indices to be retrieved from
             the table.
-        :return: The requested rows as a :class:`~omero.grid.Data` object.
+        :return: The requested rows as a :py:class:`~omero.grid.Data` object.
 
         .. note:: If you do not need the row numbers that match your read
-            returned in the :class:`~omero.grid.Data` object you can set
+            returned in the :py:class:`~omero.grid.Data` object you can set
             `omero.tables.include_row_numbers` to `false` in the Ice
             context passed when you make the call.
 
@@ -203,7 +204,7 @@ Main methods
                     }
                 )
 
-    .. method:: read(colNumbers, start, stop)
+    .. py:method:: read(colNumbers, start, stop)
 
         Read a subset of columns and consecutive rows from a table.
 
@@ -211,15 +212,15 @@ Main methods
             from the table (may be non-consecutive).
         :param long start: The index of the first row to retrieve.
         :param long stop: The index of the `last+1` row to retrieve (uses
-            similar semantics to :func:`range`).
+            similar semantics to :py:func:`range`).
         :return: The requested columns and rows as a
-            :class:`~omero.grid.Data` object.
+            :py:class:`~omero.grid.Data` object.
 
         .. note:: `start=0, stop=0` currently returns the first row instead
             of empty as would be expected using the normal Python range
             semantics. This may change in future. If you do not need the
             row numbers that match your read returned in the
-            :class:`~omero.grid.Data` object you can set
+            :py:class:`~omero.grid.Data` object you can set
             `omero.tables.include_row_numbers` to `false` in the Ice
             context passed when you make the call.
 
@@ -236,7 +237,7 @@ Main methods
                     }
                 )
 
-    .. method:: slice(colNumbers, rowNumbers)
+    .. py:method:: slice(colNumbers, rowNumbers)
 
         Read a subset of columns and rows (may be non-consecutive) from a
         table.
@@ -249,10 +250,10 @@ Main methods
             If empty or null, all rows will be returned.
 
         :return: The requested columns and rows as a
-            :class:`~omero.grid.Data` object.
+            :py:class:`~omero.grid.Data` object.
 
         .. note:: If you do not need the row numbers that match your read
-            returned in the :class:`~omero.grid.Data` object you can set
+            returned in the :py:class:`~omero.grid.Data` object you can set
             `omero.tables.include_row_numbers` to `false` in the Ice
             context passed when you make the call.
 
@@ -268,7 +269,7 @@ Main methods
                     }
                 )
 
-    .. method:: getWhereList(condition, variables, start, stop, step)
+    .. py:method:: getWhereList(condition, variables, start, stop, step)
 
         Run a query on a table, see :ref:`tables-query-language`.
 
@@ -278,54 +279,54 @@ Main methods
         :param long start: The index of the `first` row to consider.
         :param long stop: The index of the `last+1` row to consider.
         :param long step: The stepping interval between the `start` and `stop`
-            rows to consider, using the same semantics as :func:`range`. Set
+            rows to consider, using the same semantics as :py:func:`range`. Set
             to `0` to disable stepping.
         :return: A list of row indices matching the condition which can be
-            passed as the first parameter of :meth:`readCoordinates` or
-            :meth:`read`.
+            passed as the first parameter of :py:meth:`readCoordinates` or
+            :py:meth:`read`.
 
         .. note:: `variables` seems to add unnecessary complexity, should it
             be removed?
 
-    .. method:: initialize(columns)
+    .. py:method:: initialize(columns)
 
         Initialize a new table. Any column values are ignored, use
-        :meth:`addData` to add these values.
+        :py:meth:`addData` to add these values.
 
         :param Column[] columns: A list of columns whose names and types are
             used to setup the table.
 
-    .. method:: addData(columns)
+    .. py:method:: addData(columns)
 
         Append one or more full rows to the table.
 
         :param Column[] columns: A list of columns, such as those returned by
-            :meth:`getHeaders()`, whose values are the rows to be added to the
+            :py:meth:`getHeaders()`, whose values are the rows to be added to the
             table.
 
-    .. method:: update(data)
+    .. py:method:: update(data)
 
         Modify one or more columns and/or rows in a table.
 
-        :param Data data: A :class:`~omero.grid.Data` object previously
-            obtained using :meth:`read` or :meth:`readCoordinates` with column
+        :param Data data: A :py:class:`~omero.grid.Data` object previously
+            obtained using :py:meth:`read` or :py:meth:`readCoordinates` with column
             values to be updated.
 
-    .. method:: setMetadata(key, value)
+    .. py:method:: setMetadata(key, value)
 
         Store additional properties associated with a Table.
 
         :param string key: A key name.
         :param string/int/float/long value: The value of the property.
 
-    .. method:: setAllMetadata(keyvalues)
+    .. py:method:: setAllMetadata(keyvalues)
 
         Store multiple additional properties associated with a Table. See
-        :meth:`setMetadata()`.
+        :py:meth:`setMetadata()`.
 
         :param dict keyvalues: A dictionary of key-value pairs.
 
-    .. method:: getMetadata(key)
+    .. py:method:: getMetadata(key)
 
         Get the value of a property.
 
@@ -333,9 +334,9 @@ Main methods
 
         :return: A property.
 
-    .. method:: getAllMetadata()
+    .. py:method:: getAllMetadata()
 
-        Get all additional properties. See :meth:`getMetadata()`.
+        Get all additional properties. See :py:meth:`getMetadata()`.
 
         :return: All key-value properties.
 
@@ -449,7 +450,7 @@ and the following functions:
 -  ``complex(float, float)``: complex — complex from real and imaginary
    parts.
 
-for example, if `id` is the name of a :class:`~omero.grid.LongColumn`
+for example, if `id` is the name of a :py:class:`~omero.grid.LongColumn`
 
 ::
 

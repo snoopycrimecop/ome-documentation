@@ -113,6 +113,7 @@ docs_root = 'https://docs.openmicroscopy.org'
 imagesc_root = 'https://forum.image.sc'
 
 
+primary_domain="rst"
 rst_prolog = """
 """
 rst_epilog = """
@@ -413,7 +414,7 @@ def copy_legacy_redirects(app, exception):
 def setup(app):
     app.connect('build-finished', copy_legacy_redirects)
     app.add_crossref_type(
-        directivename = "property",
-        rolename      = "property",
-        indextemplate = "%s",
+        directivename="property",
+        rolename="property",
+        indextemplate = "pair: %s; property"
     )
