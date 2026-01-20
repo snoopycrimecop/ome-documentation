@@ -461,7 +461,7 @@ tmp directory mounted with noexec permissions
 ---------------------------------------------
 
 Security best practices like the CIS benchmarks or the NIST SP 800-53 framework recommend to
-set the `noexec` mount option on the `/tmp` partition. In such systems, Java Native Interface (JNI)
+set the `noexec` mount option on the :file:`/tmp` partition. In such systems, Java Native Interface (JNI)
 will be unable to make use the default temporary directory to call native shared libraries which
 is a requirement for reading some file formats like NDPI.
 
@@ -478,7 +478,7 @@ or::
 
 The recommended resolution is to upgrade OMERO.server to version 5.6.17 or later and OMERO.py
 to version 5.21.3 or later. Starting with these versions, the Java processes are configured to
-use a temporary directory other than `/tmp`.
+use a temporary directory other than :file:`/tmp`.
 
 For older versions of OMERO.server and OMERO.py, a workaround is to set the `java.io.tmpdir`
 system property to point at a temporary directory with the appropriate permissions.
