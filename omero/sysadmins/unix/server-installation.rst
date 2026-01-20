@@ -18,7 +18,7 @@ Since 5.6, a new :envvar:`OMERODIR` variable is used, you should first unset :en
 
 :doc:`server-rockylinux9-ice36`
   Instructions for installing OMERO.server from scratch on
-  RHEL 9/Rocky Linux 9 with Ice 3.6 and Python 3.9.
+  RHEL 9/Rocky Linux 9 with Ice 3.6 and Python 3.12.
 
 :doc:`server-ubuntu2404-ice36`
   Instructions for installing OMERO.server from scratch on
@@ -154,7 +154,7 @@ Check you have Python (and check its version) by running:
 ::
 
     $ python3 --version
-    Python 3.6.4
+    Python 3.12.9
 
 If possible, install the following packages:
 

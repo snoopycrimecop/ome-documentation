@@ -113,6 +113,7 @@ docs_root = 'https://docs.openmicroscopy.org'
 imagesc_root = 'https://forum.image.sc'
 
 
+primary_domain="rst"
 rst_prolog = """
 """
 rst_epilog = """
@@ -235,7 +236,7 @@ extlinks = {
     'zeroc': ('https://zeroc.com/%s', None),
     'zerocforum': ('https://forums.zeroc.com/discussion/%s', None),
     'zerocdoc': ('https://doc.zeroc.com/%s', None),
-    'djangodoc': ('https://docs.djangoproject.com/en/4.2/%s', None),
+    'djangodoc': ('https://docs.djangoproject.com/en/5.2/%s', None),
     'doi': ('https://dx.doi.org/%s', None),
     'pypi': ('https://pypi.org/project/%s', None),
     }
@@ -413,7 +414,7 @@ def copy_legacy_redirects(app, exception):
 def setup(app):
     app.connect('build-finished', copy_legacy_redirects)
     app.add_crossref_type(
-        directivename = "property",
-        rolename      = "property",
-        indextemplate = "%s",
+        directivename="property",
+        rolename="property",
+        indextemplate = "pair: %s; property"
     )

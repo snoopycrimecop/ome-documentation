@@ -58,21 +58,6 @@ Rationale: OMERO is tested on 64-bit systems only.
     * - 64-bit
       - |Recommended|
 
-NGINX
------
-
-.. list-table::
-    :header-rows: 1
-    :align: left
-
-    * - nginx
-      - OMERO 5.6
-    * - 1.23
-      - |Supported|
-    * - 1.24
-      - |Recommended|
-    * - 1.25
-      - |Upcoming|
 
 Operating system support
 ========================
@@ -219,11 +204,11 @@ OMERO support policies
     * - 12
       - Sep 2019
       - Nov 2024
-      - |Supported|
+      - |Dropped|
     * - 13
       - Sep 2020
       - Nov 2025
-      - |Supported|
+      - |Dropped|
     * - 14
       - Sep 2021
       - Nov 2026
@@ -236,6 +221,14 @@ OMERO support policies
       - Sep 2023
       - Nov 2028
       - |Recommended|
+    * - 17
+      - Sep 2024
+      - Nov 2029
+      - |Upcoming|
+    * - 18
+      - Sep 2025
+      - Nov 2030
+      - |Upcoming|
 
 Version provided by distribution
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -249,7 +242,7 @@ If no version is provided, a suitable repository is indicated.
       - CentOS/RHEL
       - Ubuntu
     * - 12
-      - 9 (`postgresql <https://download.postgresql.org/pub/repos/yum/12/redhat/rhel-9-x86_64/>`__)
+      - 9
       - 24.04 (`postgresql <https://apt.postgresql.org/pub/repos/apt/dists/noble-pgdg/>`__)
     * - 13
       - 9
@@ -298,12 +291,12 @@ OMERO support policies
     * - 3.8
       - Oct 2018
       - Oct 2024
-      - |Supported|
+      - |Dropped|
       - `PEP 569 <https://peps.python.org/pep-0569/>`__
     * - 3.9
       - Oct 2020
       - Oct 2025
-      - |Recommended|
+      - |Dropped|
       - `PEP 596 <https://peps.python.org/pep-0596/>`__
     * - 3.10
       - Oct 2021
@@ -318,8 +311,18 @@ OMERO support policies
     * - 3.12
       - Oct 2023
       - Oct 2028
-      - |Supported|
+      - |Recommended|
       - `PEP 693 <https://peps.python.org/pep-0693/>`__
+    * - 3.13
+      - Oct 2024
+      - Oct 2029
+      - |Upcoming|
+      - `PEP 719 <https://peps.python.org/pep-0719/>`__
+    * - 3.14
+      - Oct 2025
+      - Oct 2030
+      - |Upcoming|
+      - `PEP 745 <https://peps.python.org/pep-0745/>`__
 
 
 Version provided by distribution
@@ -336,10 +339,8 @@ Version provided by distribution
       - 9
       - 
     * - 3.12
-      - 
+      - 9.4+
       - 24.04
-
-The Django version used by OMERO.web (5.23.0) requires Python 3.8 or higher.
 
 .. _ice-requirements:
 
@@ -420,8 +421,8 @@ OMERO support policies
       - |Deprecated|
       - `Reference <https://access.redhat.com/articles/1299013>`__
     * - 11
-      - Sep 2018
-      - Oct 2024
+      - Aug 2021
+      - Oct 2027
       - |Recommended|
       - `Reference <https://access.redhat.com/articles/1299013>`__
     * - 17
@@ -463,22 +464,15 @@ OMERO support policies
 
 .. list-table::
     :header-rows: 1
+    :align: left
 
-    * - Version
-      - Release date
-      - Supported until
+    * - nginx
       - OMERO 5.6
-    * - 1.23
-      - Jun 2022
-      - May 2023
-      - |Supported|
-    * - 1.24
-      - Apr 2023
-      - TBA
+    * - 1.27
+      - |Dropped|
+    * - 1.28
       - |Recommended|
-    * - 1.25
-      - May 2023
-      - TBA
+    * - 1.29
       - |Upcoming|
 
 
