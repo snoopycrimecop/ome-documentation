@@ -465,7 +465,7 @@ set the `noexec` mount option on the :file:`/tmp` partition. In such systems, Ja
 will be unable to make use of the default temporary directory to call native shared libraries which
 is a requirement for reading some file formats like NDPI.
 
-Under such situation, errors like the following with appear either server-side side or client-side
+Under such situation, errors like the following will appear either server-side or client-side
 during import::
 
     java.lang.NoClassDefFoundError: Could not initialize class com.sun.jna.NativeLong
