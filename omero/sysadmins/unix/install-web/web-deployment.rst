@@ -10,7 +10,7 @@ OMERO.web can be deployed with:
 
 -  `WSGI <https://wsgi.readthedocs.org>`_ using a WSGI capable web server
    such as
-   `NGINX <https://nginx.org/>`_ and `Gunicorn <https://docs.gunicorn.org/>`_
+   `NGINX <https://nginx.org/>`_ and `Gunicorn <https://gunicorn.org/>`_
 -  the built-in Django lightweight development server. This type of deployment should only be used for **testing** purpose
    only; see the :doc:`/developers/Web/Deployment` page.
 
@@ -19,7 +19,7 @@ If you need help configuring your firewall rules, see
 
 Depending upon which platform you are using, you may find a
 more specific walkthrough listed below. The guides use the example of deploying OMERO.web with
-`NGINX <https://nginx.org/>`_ and `Gunicorn <https://docs.gunicorn.org/>`_.
+`NGINX <https://nginx.org/>`_ and `Gunicorn <https://gunicorn.org/>`_.
 OMERO can automatically generate a
 configuration file for your webserver. The location of the file will depend
 on your system, please refer to your webserver's manual. See in the section `Customizing your OMERO.web installation` in the various walkthroughs for more options.
