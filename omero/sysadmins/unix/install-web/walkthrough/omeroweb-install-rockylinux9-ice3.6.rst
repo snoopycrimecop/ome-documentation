@@ -170,7 +170,7 @@ Additional settings can be configured by changing the properties below. Before c
           processes to handle many requests per second.
 
     - :property:`omero.web.wsgi_args` Additional arguments. For more details
-      check `Gunicorn Documentation <https://docs.gunicorn.org/en/stable/settings.html>`_. For example to enable **debugging**, run the following command::
+      check `Gunicorn Documentation <https://gunicorn.org/reference/settings/>`_. For example to enable **debugging**, run the following command::
 
           omero config set omero.web.wsgi_args -- "--log-level=DEBUG --error-logfile=/opt/omero/web/omero-web/var/log/error.log"
 
@@ -338,7 +338,7 @@ OMERO.web deployment can be configured with sync and async workers. **Sync worke
     .. note::
         Handling streaming request/responses requires proxy buffering
         to be turned off. For more details refer to
-        `Gunicorn deployment <https://docs.gunicorn.org/en/stable/deploy.html>`_
+        `Gunicorn deployment <https://gunicorn.org/deploy/>`_
         and
         `NGINX configuration <https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering>`_.
 
@@ -347,7 +347,7 @@ OMERO.web deployment can be configured with sync and async workers. **Sync worke
 
 
     See
-    `Gunicorn design <https://docs.gunicorn.org/en/stable/design.html>`_ for more details.
+    `Gunicorn design <https://gunicorn.org/design/>`_ for more details.
 
 
 
