@@ -695,7 +695,7 @@ OMERO tables
 -  **Create appropriate column types with data.**
 
 ::
-
+    from omero.grid import ImageColumn, StringColumn, DoubleColumn
     cols = []
     for name in column_names:
         col_values = column_data[name]
@@ -725,6 +725,8 @@ OMERO tables
 
 ::
 
+    from omero.model import DatasetAnnotationLinkI, DatasetI, FileAnnotationI
+    from omero.model import OriginalFileI
     annotation = FileAnnotationI()
     annotation.setFile(OriginalFileI(table_file_id, False))
     annotation = conn.getUpdateService().saveAndReturnObject(annotation)
