@@ -695,6 +695,7 @@ OMERO tables
 -  **Create appropriate column types with data.**
 
 ::
+ 
     from omero.grid import ImageColumn, StringColumn, DoubleColumn
     cols = []
     for name in column_names:
