@@ -108,11 +108,12 @@ oo_root = 'https://www.openmicroscopy.org'
 oo_site_root = oo_root + '/site'
 lists_root = 'http://lists.openmicroscopy.org.uk'
 downloads_root = 'https://downloads.openmicroscopy.org'
-help_root = 'https://help.openmicroscopy.org'
+help_root = 'https://omero-guides.readthedocs.io/en/latest'
 docs_root = 'https://docs.openmicroscopy.org'
 imagesc_root = 'https://forum.image.sc'
 
 
+primary_domain="rst"
 rst_prolog = """
 """
 rst_epilog = """
@@ -126,8 +127,6 @@ rst_epilog = """
 .. _Glencoe Software, Inc.: https://www.glencoesoftware.com/
 .. _Pillow: https://pillow.readthedocs.org
 .. _Matplotlib: https://matplotlib.org/
-.. _Django 1.8: https://docs.djangoproject.com/en/1.8/releases/1.8/
-.. _Django 1.6: https://docs.djangoproject.com/en/1.6/releases/1.6/
 .. _Python: https://www.python.org
 .. _Libjpeg: http://libjpeg.sourceforge.net/
 .. _Django: https://www.djangoproject.com/
@@ -171,7 +170,7 @@ rst_epilog += """
 .. |version_py|  replace:: %s
 .. |version_web|  replace:: %s
 .. |iceversion| replace:: 3.6.5
-.. |postgresversion| replace:: 11
+.. |postgresversion| replace:: 14
 .. |javaversion_recommended| replace:: 11
 .. |javaversion_min| replace:: 8
 .. |version_dropbox|  replace:: %s
@@ -237,7 +236,7 @@ extlinks = {
     'zeroc': ('https://zeroc.com/%s', None),
     'zerocforum': ('https://forums.zeroc.com/discussion/%s', None),
     'zerocdoc': ('https://doc.zeroc.com/%s', None),
-    'djangodoc': ('https://docs.djangoproject.com/en/1.11/%s', None),
+    'djangodoc': ('https://docs.djangoproject.com/en/5.2/%s', None),
     'doi': ('https://dx.doi.org/%s', None),
     'pypi': ('https://pypi.org/project/%s', None),
     }
@@ -356,6 +355,10 @@ linkcheck_ignore += [
     r'https://docs.github.com/.*',
     r'https://wiki.centos.org/.*',
     r'https://royalsocietypublishing.org/.*',
+    r'https://trac.openmicroscopy.org*',
+    r'https://java.com/.*',
+    r'https://www.cpubenchmark.net/*',
+    r'https://www.mathworks.com/.*',
 ]
 
 exclude_patterns = ['sysadmins/unix/walkthrough/requirements*',
@@ -369,9 +372,17 @@ def copy_legacy_redirects(app, exception):
     """
     print("Adding redirects:")
     redirect_files = [
+        'sysadmins/unix/install-web/walkthrough/omeroweb-install-ubuntu1804-ice3.6.html',
+        'sysadmins/unix/server-ubuntu1804-ice36.html',
+        'sysadmins/unix/install-web/walkthrough/omeroweb-install-ubuntu2004-ice3.6.html',
+        'sysadmins/unix/server-ubuntu2004-ice36.html',
         'sysadmins/unix/install-web/walkthrough/omeroweb-install-debian9-ice3.6.html',
         'sysadmins/unix/server-debian9-ice36.html',
+        'sysadmins/unix/install-web/walkthrough/omeroweb-install-debian10-ice3.6.html',
+        'sysadmins/unix/server-debian10-ice36.html',
+        'sysadmins/unix/install-web/walkthrough/omeroweb-install-centos7-ice3.6.html',
         'sysadmins/unix/install-web/walkthrough/omeroweb-install-centos8-ice3.6.html',
+        'sysadmins/unix/server-centos7-ice36.html',
         'sysadmins/unix/server-centos8-ice36.html',
         'sysadmins/server-overview.html',
         'sysadmins/server-tables.html',
@@ -403,7 +414,7 @@ def copy_legacy_redirects(app, exception):
 def setup(app):
     app.connect('build-finished', copy_legacy_redirects)
     app.add_crossref_type(
-        directivename = "property",
-        rolename      = "property",
-        indextemplate = "%s",
+        directivename="property",
+        rolename="property",
+        indextemplate = "pair: %s; property"
     )

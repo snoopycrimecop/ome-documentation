@@ -3,8 +3,8 @@ OMERO.server upgrade
 
 The OME team is committed to providing frequent, project-wide upgrades both
 with bug fixes and new functionality. We try to make the schedule for these
-releases as public as possible. You may want to take a look at the `Trello
-boards <https://trello.com/b/4EXb35xQ/getting-started>`_ for exactly what will
+releases as public as possible. You may want to take a look at the `GitHub Projects
+<https://github.com/orgs/ome/projects>`_ for exactly what will
 go into a release. See also :doc:`omeroweb-upgrade`.
 
 See the full details of OMERO |version_openmicroscopy| features in the :doc:`/users/history`.
@@ -24,6 +24,7 @@ the level of detail; upgrading should be a straightforward process.
     for upgrading *to* OMERO |previousversion| because some extra steps
     may be required beyond simply running the SQL upgrade scripts
     described below.
+
 
 Upgrade checklist
 -----------------
@@ -312,6 +313,9 @@ See :ref:`jvm_memory_settings` for more information.
 Dependencies
 ^^^^^^^^^^^^
 
+.. warning::
+    Upgrading to OMERO 5.6.12 or higher requires an upgrade to OMERO.py 5.19.4 or higher
+    
 While upgrading the server you should keep OMERO.py dependencies
 up to date to ensure that security updates are applied:
 

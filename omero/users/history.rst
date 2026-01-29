@@ -32,6 +32,180 @@ omero clients:
 OMERO version history
 =====================
 
+5.6.16 (June 2025)
+------------------
+
+This main focus of this release is the update of the dependencies of OMERO.server.
+This includes the removal of unnused dependencies as well as the upgrade of several
+libraries where the current version is associated with public vulnerabilities.
+It also includes a server fix when reading `omero.policy.binary_access` stored as a
+group configuration.
+The version of Bio-Formats bundled with the OMERO.server binary is bumped to 8.2.0
+and will invalidate previous Bio-Formats Memoizer cache files. Please
+refer to the upgrade guide for further information.
+Finally this release adds NumPy 2.3 support via OMERO.scripts 5.9.1
+shipped with the server binary, OMERO.py 5.21.0 and OMERO.web 5.29.1.
+
+The following OMERO.server dependencies have been upgraded:
+
+- `org.openmicroscopy:omero-blitz` from 5.8.2 to 5.8.3
+- `org.openmicroscopy:omero-common` from 5.7.2 to 5.7.3
+- `org.openmicroscopy:omero-gateway-java` from 5.10.2 to 5.10.3
+- `org.openmicroscopy:omero-model` from 5.7.2 to 5.7.3
+- `org.openmicroscopy:omero-server` from 5.7.2 to 5.7.3
+- `org.openmicroscopy:omero-renderer` from 5.6.2 to 5.6.3
+- `org.openmicroscopy:omero-romio` from 5.8.2 to 5.8.3
+- Spring Framework from 4.3.14 to 4.3.30
+- Spring Security LDAP from 4.2.4 to 4.2.20
+- `net.sf.ehcache:ehcache` from 2.10.4 to 2.10.9.2
+- `org.quartz-scheduler:quartz` from 2.2.1 to 2.4.0
+- `org.apache.calcite:calcite-core` from 1.20.0 to 1.35.0
+- `org.apache.xmlgraphics:batik-codec` from 1.9.1 to 1.19
+
+The following OMERO.server dependencies have been removed:
+
+- `org.apache.xmlgraphics:batik-all` in favor of `org.apache.xmlgraphics:batik-codec` and its dependencies
+- `com.jamonapi:jamon`
+- `edu.ucar:bufr`
+- `edu.ucar:udunits`
+
+5.6.15 (April 2025)
+-------------------
+
+This release includes the following upgrade of the OMERO.server Java components:
+
+- omero-blitz 5.8.2
+- omero-common 5.7.2
+- omero-gateway-java 5.10.2
+- omero-model 5.7.2
+- omero-server 5.7.2
+- omero-render 5.6.2
+- omero-romio 5.8.2
+
+Improvements include:
+
+- Replace usage of Java Util Logging (JUL) by SLF4J
+- Include latest Bio-Formats version 8.1.1
+
+5.6.14 (November 2024)
+----------------------
+
+This release includes the following upgrade of the OMERO.server Java components:
+
+- omero-gateway-java 5.10.0
+- omero-blitz 5.8.0
+- omero-server 5.7.0
+- omero-renderer 5.6.0
+- omero-romio 5.7.0
+- omero-common 5.7.0
+- omero-model 5.7.0
+
+The Java components listed above have been built via Java 11 with the compatibility flag on for Java 8.
+Due to limited testing on Java 8, we recommend to upgrade to Java 11 or higher.
+
+Improvements include:
+
+- Add new lookup tables. See https://github.com/ome/openmicroscopy/pull/6398.
+- Ugrade of Bio-Formats to version 8.0.1.
+- Bump slf4j dependencies. See https://github.com/ome/openmicroscopy/pull/6409.
+
+
+This version of the OMERO.server has been tested with:
+
+- OMERO.py 5.19.5
+- OMERO.web 5.28.0
+
+5.6.13 (August 2024)
+--------------------
+
+This release reverts a change to the build process introduced in 5.6.12 that resulted in
+unused copies of old jars being included in the release.
+
+
+5.6.12 (July 2024)
+------------------
+
+This release includes the following upgrade of the OMERO.server Java components:
+
+- omero-gateway-java 5.9.2
+- omero-blitz 5.7.3
+- omero-server 5.6.12
+- omero-renderer 5.5.17
+- omero-romio 5.7.7
+- omero-common 5.6.7
+- omero-model 5.6.15
+
+
+Improvements include:
+
+- Handle archive status being populated. Related to https://github.com/ome/omero-web/pull/555
+- Add more tests using the Tables service
+- an upgrade of Bio-Formats to version 7.3.1
+- an update of IceGrid templates to make OMERO.tables more configurable. 
+
+**Note:** This upgrade will require an upgrade of OMERO.py to 5.19.4 to ensure that
+the Tables service starts as expected. If OMERO.py is not upgraded, the Tables service will
+be marked as inactive.
+
+
+This version of the OMERO.server has been tested with:
+
+- OMERO.py 5.19.4
+- OMERO.web 5.27.0
+
+5.6.11 (May 2024)
+-----------------
+
+This release includes the following upgrade of the OMERO.server Java components:
+
+- omero-gateway-java 5.9.1
+- omero-blitz 5.7.3
+- omero-server 5.6.11
+- omero-renderer 5.5.16
+- omero-romio 5.7.6
+- omero-common 5.6.5
+- omero-model 5.6.14
+
+
+Improvements include:
+
+- an upgrade of Bio-Formats to version 7.3.0
+
+**Note:** This upgrade will invalidate the Bio-Formats Memoizer cache. Please
+see the upgrade guide for further information.
+
+This version of the OMERO.server has been tested with:
+
+- OMERO.py 5.19.2
+- OMERO.web 5.25.0
+
+5.6.10 (December 2023)
+----------------------
+
+This release includes the following upgrade of the OMERO.server Java components:
+
+- omero-gateway-java 5.9.0
+- omero-blitz 5.7.2
+- omero-server 5.6.10
+- omero-renderer 5.5.15
+- omero-romio 5.7.5
+- omero-common 5.6.4
+- omero-model 5.6.13
+
+
+Improvements include:
+
+- an upgrade of logback-classic to version 1.3.14
+- an upgrade of Bio-Formats to version 7.1.0
+
+**Note:** This upgrade will invalidate the Bio-Formats Memoizer cache. Please
+see the upgrade guide for further information.
+
+This version of the OMERO.server has been tested with:
+
+- OMERO.py 5.17.0
+- OMERO.web 5.23.0
+
 5.6.9 (October 2023)
 --------------------
 

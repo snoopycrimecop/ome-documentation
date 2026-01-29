@@ -5,13 +5,14 @@ on:
     - cron: '* 0 * * *'
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       ICE_HOME: /opt/ice-3.6.5 # location where Ice is installed
+      GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Ice Java and Python binding
-        uses: ome/action-ice@v1
+        uses: ome/action-ice@v3
       - name: Set up configuration
         run: |
           git config --global user.email github-actions@github.com
@@ -21,16 +22,21 @@ jobs:
           cd ..
           WORKSPACE=$(pwd)
           echo "space="${WORKSPACE} >> $GITHUB_ENV
-          git clone https://github.com/ome/openmicroscopy OMERO.server
           git clone https://github.com/ome/omeroweb-install
           git clone https://github.com/ome/omero-install
-      - name: Build OMERO.server
+      - name: Download latest release of OMERO.server
         run: |
-          cd $space/OMERO.server
-          ./build.py
+          cd ..
+          gh release download -R ome/openmicroscopy --pattern "OMERO.server*zip"
+          unzip OMERO.server*.zip && rm OMERO.server*.zip
+          ln -s OMERO.server* OMERO.server
+      - name: Create Virtual environment
+        run: |
+          python -m venv $space/.venv3
+          $space/.venv3/bin/pip install https://github.com/glencoesoftware/zeroc-ice-py-ubuntu2204-x86_64/releases/download/20221004/zeroc_ice-3.6.5-cp310-cp310-linux_x86_64.whl
       - name: Update documentation
         run: |
-          WORKSPACE=$space BUILD=false SUFFIX=/dist bash autogen_omero.sh
+          WORKSPACE=$space bash autogen_omero.sh
       - name: Find modified files
         id: upstream_repo
         run: |
@@ -45,10 +51,9 @@ jobs:
           fi
           echo "value=$value" >> $GITHUB_OUTPUT
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v7
         with:
           labels: include
-          token: ${{secrets.ACTION_API_TOKEN}}
           commit-message: ${{ steps.upstream_repo.outputs.value }}
           delete-branch: true
           title: ${{ steps.upstream_repo.outputs.value }}

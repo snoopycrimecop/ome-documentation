@@ -16,7 +16,6 @@ apt-get install -y openjdk-11-jre
 # install dependencies
 
 # start-add-dependencies
-apt-get update
 apt-get -y install \
     unzip \
     wget \
@@ -28,33 +27,32 @@ apt-get -y install \
 #start-recommended-ice
 apt-get update && \
 apt-get install -y -q \
-build-essential \
 db5.3-util \
-libbz2-dev \
-libdb++-dev \
-libdb-dev \
-libexpat-dev \
-libmcpp-dev \
-libssl-dev \
+bzip2 \
+libdb++ \
+libexpat1 \
+libmcpp0 \
+openssl \
 mcpp \
-zlib1g-dev
+zlib1g
 
 cd /tmp
-wget -q https://github.com/ome/zeroc-ice-ubuntu1804/releases/download/0.3.0/ice-3.6.5-0.3.0-ubuntu1804-amd64.tar.gz
-tar xf ice-3.6.5-0.3.0-ubuntu1804-amd64.tar.gz
-mv ice-3.6.5-0.3.0 ice-3.6.5
-mv ice-3.6.5 /opt
-echo /opt/ice-3.6.5/lib/x86_64-linux-gnu > /etc/ld.so.conf.d/ice-x86_64.conf
+wget -q https://github.com/glencoesoftware/zeroc-ice-ubuntu2204-x86_64/releases/download/20221004/Ice-3.6.5-ubuntu2204-x86_64.tar.gz
+tar xf Ice-3.6.5-ubuntu2204-x86_64.tar.gz
+mv Ice-3.6.5 /opt/ice-3.6.5
+echo /opt/ice-3.6.5/lib64 > /etc/ld.so.conf.d/ice-x86_64.conf
 ldconfig
 #end-recommended-ice
 
 
 # install Postgres
-apt-get install -y gnupg
-echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+apt-get install -y curl ca-certificates
+install -d /usr/share/postgresql-common/pgdg
+curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
+sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt jammy-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+
 apt-get update
-apt-get -y install postgresql-11
+apt-get -y install postgresql-15
 service postgresql start
 #end-step01
 
@@ -82,7 +80,7 @@ python3 -mvenv $VENV_SERVER
 $VENV_SERVER/bin/pip install --upgrade pip
 
 # Install the Ice Python binding
-$VENV_SERVER/bin/pip install https://github.com/ome/zeroc-ice-ubuntu1804/releases/download/0.3.0/zeroc_ice-3.6.5-cp36-cp36m-linux_x86_64.whl
+$VENV_SERVER/bin/pip install https://github.com/glencoesoftware/zeroc-ice-py-ubuntu2204-x86_64/releases/download/20221004/zeroc_ice-3.6.5-cp310-cp310-linux_x86_64.whl
 
 # Install server dependencies
 $VENV_SERVER/bin/pip install omero-server

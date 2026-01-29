@@ -1,51 +1,56 @@
 #!/bin/bash
 set -e -u -x
 
-#start-step01: As root, install dependencies
-apt-get update
-
-apt-get -y install unzip wget bc
-
-# to be installed if daily cron tasks are configured
-apt-get -y install cron
 
 # install Java
-apt-get -y install default-jre
+cat <<EOF > /etc/yum.repos.d/adoptium.repo
+[Adoptium]
+name=Adoptium
+baseurl=https://packages.adoptium.net/artifactory/rpm/rhel/\$releasever/\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.adoptium.net/artifactory/api/gpg/key/public
+EOF
+
+dnf -y install temurin-11-jdk
 
 # install dependencies
+# Enable CodeReady Linux Builder repository
+if grep -q "Rocky" /etc/redhat-release; then
+  dnf -y install 'dnf-command(config-manager)'
+  dnf config-manager --set-enabled crb
+fi
+if grep -q "Red Hat" /etc/redhat-release; then
+  subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
+fi
 
-apt-get -y install\
-    python3 \
-    python3-venv
+dnf -y upgrade
+dnf -y install python3.12 tar unzip bzip2 wget bc openssl
 #end-step01
 # install Ice
 #start-recommended-ice
-apt-get update && \
-apt-get install -y -q \
-build-essential \
-db5.3-util \
-libbz2-dev \
-libdb++-dev \
-libdb-dev \
-libexpat-dev \
-libmcpp-dev \
-libssl-dev \
-mcpp \
-zlib1g-dev
+dnf -y install expat libdb-cxx
 
 cd /tmp
-wget -q https://github.com/ome/zeroc-ice-debian10/releases/download/0.1.0/ice-3.6.5-0.1.0-debian10-amd64.tar.gz
-tar xf ice-3.6.5-0.1.0-debian10-amd64.tar.gz
-mv ice-3.6.5-0.1.0 ice-3.6.5
-mv ice-3.6.5 /opt
-echo /opt/ice-3.6.5/lib/x86_64-linux-gnu > /etc/ld.so.conf.d/ice-x86_64.conf
+wget https://github.com/glencoesoftware/zeroc-ice-rhel9-x86_64/releases/download/20231130/Ice-3.6.5-rhel9-x86_64.tar.gz
+tar xf Ice-3.6.5-rhel9-x86_64.tar.gz
+mv Ice-3.6.5 /opt/ice-3.6.5
+echo /opt/ice-3.6.5/lib64 > /etc/ld.so.conf.d/ice-x86_64.conf
 ldconfig
 #end-recommended-ice
 
 
 # install Postgres
-apt-get install -y postgresql-11
-service postgresql start
+dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+dnf -qy module disable postgresql
+dnf -y install postgresql16-server postgresql16
+PGSETUP_INITDB_OPTIONS=--encoding=UTF8  /usr/pgsql-16/bin/postgresql-16-setup initdb
+
+
+sed -i.bak -re 's/^(host.*)ident/\1md5/' /var/lib/pgsql/16/data/pg_hba.conf
+sed -i 's/ ident/ trust/g' /var/lib/pgsql/16/data/pg_hba.conf
+systemctl start postgresql-16
+systemctl enable postgresql-16
 #end-step01
 
 #start-step02: As root, create a local omero-server system user and directory for the OMERO repository
@@ -66,14 +71,13 @@ psql -P pager=off -h localhost -U "$OMERO_DB_USER" -l
 
 #start-step03bis: As root, create a virtual env and install dependencies
 # Create a virtual env
-python3 -mvenv $VENV_SERVER
+python3.12 -mvenv $VENV_SERVER
 
 # Upgrade pip
 $VENV_SERVER/bin/pip install --upgrade pip
 
 # Install the Ice Python binding
-$VENV_SERVER/bin/pip install https://github.com/ome/zeroc-ice-debian10/releases/download/0.1.0/zeroc_ice-3.6.5-cp37-cp37m-linux_x86_64.whl
-
+$VENV_SERVER/bin/pip install https://github.com/glencoesoftware/zeroc-ice-py-linux-x86_64/releases/download/20240202/zeroc_ice-3.6.5-cp312-cp312-manylinux_2_28_x86_64.whl
 # Install server dependencies
 $VENV_SERVER/bin/pip install omero-server
 #end-step03bis
@@ -120,3 +124,12 @@ chmod go-rwx $OMERODIR/etc $OMERODIR/var
 # Optionally restrict access to the OMERO data directory
 # chmod go-rwx "$OMERO_DATA_DIR"
 #end-step07
+#start-step08: As root, configure
+cp omero-server-systemd.service /etc/systemd/system/omero-server.service
+
+systemctl daemon-reload
+
+systemctl enable omero-server.service
+firewall-cmd --zone=public --add-port=4064/tcp --permanent
+firewall-cmd --reload
+#end-step08

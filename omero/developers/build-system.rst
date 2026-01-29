@@ -248,9 +248,9 @@ Building Bio-Formats
 From the top-level folder of the Bio-Formats repository,
 
 #. if necessary, adjust the version of Bio-Formats which will be built,
-   installed locally and consumed by OMERO e.g. for 5.2.0-SNAPSHOT::
+   installed locally and consumed by OMERO e.g. for 8.2.0-SNAPSHOT::
 
-     $ ./tools/bump_maven_version.py 5.2.0-SNAPSHOT
+     $ mvn versions:set -DnewVersion=8.2.0-SNAPSHOT -DgenerateBackupPoms=false
 
 #. run the Maven command allowing to build and install the artifacts under the
    local Maven cache::

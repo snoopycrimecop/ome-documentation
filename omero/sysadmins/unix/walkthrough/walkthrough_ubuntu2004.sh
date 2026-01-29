@@ -10,15 +10,12 @@ apt-get -y install unzip wget bc
 apt-get -y install cron
 
 # install Java
-apt-get -y install software-properties-common
-add-apt-repository ppa:openjdk-r/ppa
 apt-get update -q
 apt-get install -y openjdk-11-jre
 
 # install dependencies
 
 # start-add-dependencies
-apt-get update
 apt-get -y install \
     unzip \
     wget \
@@ -28,7 +25,6 @@ apt-get -y install \
 #end-step01
 # install Ice
 #start-recommended-ice
-apt-get update && \
 apt-get install -y -q \
 build-essential \
 db5.3-util \
@@ -52,7 +48,6 @@ ldconfig
 
 
 # install Postgres
-apt-get update
 apt-get -y install postgresql
 service postgresql start
 #end-step01

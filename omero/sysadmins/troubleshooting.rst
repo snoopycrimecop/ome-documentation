@@ -419,6 +419,14 @@ your existing sessions are likely incompatible and you will need to follow
 the steps indicated at :ref:`clearing_session_store` to clear the sessions
 store.
 
+Look-up tables not displaying in OMERO.web
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you have added LUTs to the server and they are not displaying in OMERO.web,
+please see these
+`notes on LUTs caching <https://github.com/ome/omero-web?tab=readme-ov-file#luts-caching>`_.
+
+
 .. _client_performance:
 
 Troubleshooting performance issues with the clients
@@ -491,4 +499,13 @@ PyTables version
 
 Note that PyTables has dropped support for Python 3.8 in the 3.9.x line, 
 see `tag v3.9.1 <https://github.com/PyTables/PyTables/releases/tag/v3.9.1>`_ .
+
+
+.. _table_service:
+
+Tables service inactive
+^^^^^^^^^^^^^^^^^^^^^^^
+
+In OMERO version 5.6.12, the IceGridTemplate was upgraded to make the OMERO.tables module configurable.
+In order for the service to be active, it is required to also upgrade OMERO.py to 5.19.4
 

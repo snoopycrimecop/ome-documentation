@@ -2,43 +2,53 @@
 set -e -u -x
 
 #start-step01: As root, install dependencies
-yum -y install epel-release
+apt-get update
 
-yum -y install unzip wget bc
+apt-get -y install unzip wget bc
+
+# to be installed if daily cron tasks are configured
+apt-get -y install cron
 
 # install Java
-yum -y install java-11-openjdk
+apt-get update -q
+apt-get install -y openjdk-11-jre
 
 # install dependencies
 
-yum -y install python3
-yum -y install openssl
+# start-add-dependencies
+apt-get -y install \
+    unzip \
+    wget \
+    python3 \
+    python3-venv
+# end-add-dependencies
 #end-step01
 # install Ice
 #start-recommended-ice
-curl -sL https://zeroc.com/download/Ice/3.6/el7/zeroc-ice3.6.repo > \
-/etc/yum.repos.d/zeroc-ice3.6.repo
+apt-get update && \
+apt-get install -y -q \
+db5.3-util \
+bzip2 \
+libdb++ \
+libexpat1 \
+libmcpp0 \
+openssl \
+mcpp \
+zlib1g
 
-yum -y install glacier2 \
-icebox \
-icegrid \
-icepatch2 \
-libfreeze3.6-c++ \
-libice3.6-c++ \
-libicestorm3.6
+cd /tmp
+wget -q https://github.com/glencoesoftware/zeroc-ice-ubuntu2404-x86_64/releases/download/20240619/Ice-3.6.5-ubuntu2404-x86_64.tar.gz
+tar xf Ice-3.6.5-ubuntu2404-x86_64.tar.gz
+mv Ice-3.6.5 /opt/ice-3.6.5
+echo /opt/ice-3.6.5/lib64 > /etc/ld.so.conf.d/ice-x86_64.conf
+ldconfig
 #end-recommended-ice
 
 
 # install Postgres
-yum -y install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-yum -y install postgresql11-server postgresql11
-
-PGSETUP_INITDB_OPTIONS=--encoding=UTF8 /usr/pgsql-11/bin/postgresql-11-setup initdb
-
-sed -i.bak -re 's/^(host.*)ident/\1md5/' /var/lib/pgsql/11/data/pg_hba.conf
-systemctl start postgresql-11.service
-
-systemctl enable postgresql-11.service
+apt-get update
+apt-get -y install postgresql
+service postgresql start
 #end-step01
 
 #start-step02: As root, create a local omero-server system user and directory for the OMERO repository
@@ -65,7 +75,7 @@ python3 -mvenv $VENV_SERVER
 $VENV_SERVER/bin/pip install --upgrade pip
 
 # Install the Ice Python binding
-$VENV_SERVER/bin/pip install https://github.com/ome/zeroc-ice-py-centos7/releases/download/0.2.1/zeroc_ice-3.6.5-cp36-cp36m-linux_x86_64.whl
+$VENV_SERVER/bin/pip install https://github.com/glencoesoftware/zeroc-ice-py-linux-x86_64/releases/download/20240202/zeroc_ice-3.6.5-cp312-cp312-manylinux_2_28_x86_64.whl
 
 # Install server dependencies
 $VENV_SERVER/bin/pip install omero-server
@@ -98,17 +108,13 @@ psql -h localhost -U "$OMERO_DB_USER" "$OMERO_DB_NAME" < $OMERODIR/db.sql
 omero certificates
 #end-seclevel
 
-#start-diffie-hellman
-omero config set omero.glacier2.IceSSL.Ciphers=HIGH:!DH
-#end-diffie-hellman
-
 
 #start-step06: As root, run the scripts to start OMERO automatically
-cp omero-server-systemd.service /etc/systemd/system/omero-server.service
+cp omero-server-init.d /etc/init.d/omero-server
+chmod a+x /etc/init.d/omero-server
 
-systemctl daemon-reload
-
-systemctl enable omero-server.service
+update-rc.d -f omero-server remove
+update-rc.d -f omero-server defaults 98 02
 #end-step06
 
 #start-step07: As root, secure OMERO
@@ -117,12 +123,3 @@ chmod go-rwx $OMERODIR/etc $OMERODIR/var
 # Optionally restrict access to the OMERO data directory
 # chmod go-rwx "$OMERO_DATA_DIR"
 #end-step07
-#start-selinux
-
-if [ $(getenforce) != Disabled ]; then
-    yum -y install policycoreutils-python
-    setsebool -P httpd_read_user_content 1
-    setsebool -P httpd_enable_homedirs 1
-    semanage port -a -t http_port_t -p tcp 4080
-fi
-#end-selinux

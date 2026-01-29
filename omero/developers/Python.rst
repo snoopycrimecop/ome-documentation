@@ -6,24 +6,42 @@ libraries.
 
 From OMERO 5.6.0 release, the client library ``omero-py`` supports Python 3 and
 is now available on PyPI_ and Conda_. The ``omero-py`` API documentation is available at https://omero-py.readthedocs.io/.
-We recommend you use a Python virtual environment to install the client library. You can create one using either ``venv`` or ``conda`` (preferred).
-If you opt for Conda_, you will need
-to install it first, see `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ for more details.
+We recommend you use a Python virtual environment to install the client library. You can create one using either ``venv``, ``conda`` or ``mamba``.
+Before installing ``omero-py``, we recommend to install the `Zeroc IcePy 3.6 <https://zeroc.com/ice/downloads/3.6>`_ Python bindings.
 
-To install ``omero-py`` using venv:
+Our commercial partner `Glencoe Software <https://www.glencoesoftware.com>`_ has produced several Python wheels to install the Ice-Python bindings depending on the desired Python version and the operating system. Please visit the `Ice binaries for omero <https://www.glencoesoftware.com/blog/2023/12/08/ice-binaries-for-omero.html>`_ page to find the full URLs to the wheels that are used in the examples below.
+ 
+
+For example, to install ``omero-py`` using ``pip`` in a virtual environment created with Python 3.11 on Ubuntu 22.04:
 
 .. parsed-literal::
 
     $ python3 -m venv myenv
     $ . myenv/bin/activate
+    $ pip install https://github.com/glencoesoftware/zeroc-ice-py-linux-x86_64/releases/download/20240202/zeroc_ice-3.6.5-cp311-cp311-manylinux_2_28_x86_64.whl
     $ pip install omero-py==\ |version_py|
 
-To install ``omero-py`` using conda (preferred):
+To install ``omero-py`` using ``pip`` in a ``conda`` environment with Python 3.11 on Ubuntu 22.04:
 
 .. parsed-literal::
 
-    conda create -n myenv -c conda-forge python=3.8 omero-py
-    conda activate myenv
+    $ conda create -n myenv python=3.11
+    $ conda activate myenv
+    $ pip install https://github.com/glencoesoftware/zeroc-ice-py-linux-x86_64/releases/download/20240202/zeroc_ice-3.6.5-cp311-cp311-manylinux_2_28_x86_64.whl
+    $ pip install omero-py==\ |version_py|
+
+.. note::
+   When installing the binaries, if an error like ``zeroc_ice-3.6.5-cp311-cp311-macosx_11_0_universal2.whl is not a supported wheel on this platform`` occurs, this is probably due to the fact that your Python environment is not compatible with the platform
+   compatibility tags of the pre-built wheel. In that case, you may find that creating a conda environment using the ``conda-forge`` channel i.e. ``-c conda-forge`` gives a different set of tags that may help.
+   Otherwise, we recommend to install the Ice-Python bindings using the binaries from the ``conda-forge`` channel, see example
+   below.
+
+To install ``omero-py`` using ``conda``. The Ice-Python bindings available from the ``conda-forge`` channel are only compatible with Python 3.9:
+
+.. parsed-literal::
+
+    $ conda create -n myenv python=3.9 conda-forge::zeroc-ice==3.6.5 omero-py
+    $ conda activate myenv
 
 You can then start using the library in the terminal where the environment has been activated:
 
@@ -197,8 +215,9 @@ Read data
     # Load first 5 Projects, filtering by default group and owner
     my_exp_id = conn.getUser().getId()
     default_group_id = conn.getEventContext().groupId
+    # To query across all groups, use -1
+    conn.SERVICE_OPTS.setOmeroGroup(default_group_id)
     for project in conn.getObjects("Project", opts={'owner': my_exp_id,
-                                                'group': default_group_id,
                                                 'order_by': 'lower(obj.name)',
                                                 'limit': 5, 'offset': 0}):
         print_obj(project)
@@ -1144,6 +1163,7 @@ Render Images
 -  **Get thumbnail**
 
 ::
+
     from PIL import Image
     from io import BytesIO
     # Thumbnail is created using the current rendering settings on the image

@@ -5,7 +5,7 @@ System Administrator Documentation
 This documentation begins with information aimed at OS-level administrators
 and moves on to day-to-day management of OMERO for facility managers (who may
 find it useful to read the
-:help:`Facility Managers help guide <facility-manager.html>` for an overview
+:help:`Facility Managers walkthrough <example_facility_manager.html>` for an overview
 first).
 
 ***************
@@ -54,11 +54,12 @@ an existing component, or just looking for more background information, there
 is a section about the server within the :doc:`/developers/index`;
 the best starting point is the :doc:`/developers/Server` for developers.
 
-Background reading
-##################
+**************************
+Requirements & limitations
+**************************
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
     :titlesonly:
 
     whatsnew
@@ -105,6 +106,7 @@ and installation directory.
     :maxdepth: 1
     :titlesonly:
 
+    system-migration
     python3-migration
     server-upgrade
     omeroweb-upgrade
@@ -165,12 +167,13 @@ tasks on behalf of all users.
 
     server-permissions
     restricted-admins
+    lookup-tables
 
 .. seealso::
 
     - Command Line Interface guides for :doc:`cli/usergroup` and
       :doc:`/users/cli/chown`
-    - :help:`Facility Managers help guide <facility-manager.html>`
+    - :help:`Wlakthrough for Facility Managers <example_facility_manager.html>`
 
 ***********************
 Data Import and Storage

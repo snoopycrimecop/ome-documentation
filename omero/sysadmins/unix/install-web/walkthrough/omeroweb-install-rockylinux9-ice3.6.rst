@@ -1,13 +1,13 @@
 .. walkthroughs are generated using ansible, see 
 .. https://github.com/ome/omeroweb-install
 
-OMERO.web installation on CentOS 7 and IcePy 3.6
-================================================
+OMERO.web installation on Rocky Linux 9 and IcePy 3.6
+=====================================================
 
-Please first read :doc:`../../server-centos7-ice36`.
+Please first read :doc:`../../server-rockylinux9-ice36`.
 
 
-This is an example walkthrough for installing OMERO.web in a **virtual environment** using a dedicated system user. Installing OMERO.web in a virtual environment is the preferred way. For convenience in this walkthrough, we will use the **omero-web system user** and define the main OMERO.web configuration options as environment variables. Since 5.6, a new :envvar:`OMERODIR` variable is used, you should first unset :envvar:`OMERO_HOME` (if set) before beginning the installation process. By default, Python 3.6 is installed.
+This is an example walkthrough for installing OMERO.web in a **virtual environment** using a dedicated system user. Installing OMERO.web in a virtual environment is the preferred way. For convenience in this walkthrough, we will use the **omero-web system user** and define the main OMERO.web configuration options as environment variables. Since 5.6, a new :envvar:`OMERODIR` variable is used, you should first unset :envvar:`OMERO_HOME` (if set) before beginning the installation process. By default, Python 3.12 is installed.
 
 
 **The following steps are run as root.**
@@ -19,8 +19,6 @@ If required, first create a local system user omero-web and create directory::
     mkdir -p /opt/omero/web/omero-web/etc/grid
     chown -R omero-web /opt/omero/web/omero-web
 
-
-
 Installing prerequisites
 ------------------------
 
@@ -29,18 +27,35 @@ Installing prerequisites
 
 Install dependencies::
 
-    yum -y install epel-release
+        if grep -q "Rocky" /etc/redhat-release; then
+            dnf -y install 'dnf-command(config-manager)'
+            dnf config-manager --set-enabled crb
+        fi
+        if grep -q "Red Hat" /etc/redhat-release; then
+            subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
+        fi
+        cat <<EOF > /etc/yum.repos.d/nginx.repo
+        [nginx-stable]
+        name=nginx stable repo
+        baseurl=http://nginx.org/packages/centos/\$releasever/\$basearch/
+        gpgcheck=1
+        enabled=1
+        gpgkey=https://nginx.org/keys/nginx_signing.key
+        module_hotfixes=true
+        EOF
 
-    yum -y install unzip
+    dnf -y install git
 
-    yum -y install python3
+    dnf -y install unzip
 
-    yum -y install nginx
+    dnf -y install python3.12
+
+    dnf -y install nginx
 
 
-*Optional*: if you wish to use the Redis cache, install Redis::
+*Recommended*: if you wish to use the Redis cache, install Redis::
 
-    yum -y install redis
+    dnf -y install redis
 
     systemctl enable redis.service
 
@@ -52,16 +67,16 @@ Creating a virtual environment
 
 **The following steps are run as root.**
 
+
 Create the virtual environment. This is the recommended way to install OMERO.web::
 
-    python3 -mvenv /opt/omero/web/venv3
-
+    python3.12 -mvenv /opt/omero/web/venv3
 
 
 
 Install ZeroC IcePy 3.6::
 
-    /opt/omero/web/venv3/bin/pip install https://github.com/ome/zeroc-ice-py-centos7/releases/download/0.2.1/zeroc_ice-3.6.5-cp36-cp36m-linux_x86_64.whl
+    /opt/omero/web/venv3/bin/pip install https://github.com/glencoesoftware/zeroc-ice-py-linux-x86_64/releases/download/20240202/zeroc_ice-3.6.5-cp312-cp312-manylinux_2_28_x86_64.whl
 
 
 Upgrade pip and install OMERO.web::
@@ -155,7 +170,7 @@ Additional settings can be configured by changing the properties below. Before c
           processes to handle many requests per second.
 
     - :property:`omero.web.wsgi_args` Additional arguments. For more details
-      check `Gunicorn Documentation <https://docs.gunicorn.org/en/stable/settings.html>`_. For example to enable **debugging**, run the following command::
+      check `Gunicorn Documentation <https://gunicorn.org/reference/settings/>`_. For example to enable **debugging**, run the following command::
 
           omero config set omero.web.wsgi_args -- "--log-level=DEBUG --error-logfile=/opt/omero/web/omero-web/var/log/error.log"
 
@@ -189,10 +204,15 @@ Configuring NGINX
 
 Copy the generated configuration file into the NGINX configuration directory, disable the default configuration and start NGINX::
 
-    sed -i.bak -re 's/( default_server.*)/; #\1/' /etc/nginx/nginx.conf
+    # Disable default server config
+    # Newer nginx versions:
     if [ -f /etc/nginx/conf.d/default.conf ]; then
         mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.disabled
     fi
+    # Older nginx versions:
+    sed -i.bak -re 's/( default_server.*)/; #\1/' /etc/nginx/nginx.conf
+    sed -i "/^\s\s\s\sserver/, /^\s\s\s\s}/ s|^|#|" /etc/nginx/nginx.conf
+
     cp /opt/omero/web/omero-web/nginx.conf.tmp /etc/nginx/conf.d/omeroweb.conf
 
     systemctl enable nginx
@@ -222,13 +242,13 @@ Running OMERO.web
 Since OMERO.web 5.16.0, the package `whitenoise` is installed by default.
 
 
-*Optional*: Install `Django Redis <https://github.com/jazzband/django-redis>`_::
+*Recommended*: Install `Django Redis <https://github.com/jazzband/django-redis>`_::
 
     /opt/omero/web/venv3/bin/pip install 'django-redis==5.0.0'
 
 **The following steps are run as the omero-web system user.**
 
-*Optional*: Configure the cache::
+*Recommended*: Configure the cache::
 
     omero config set omero.web.caches '{"default": {"BACKEND": "django_redis.cache.RedisCache","LOCATION": "redis://127.0.0.1:6379/0"}}'
     omero config set omero.web.session_engine 'django.contrib.sessions.backends.cache'
@@ -249,27 +269,6 @@ Automatically running OMERO.web
 
 **The following steps are run as root.**
 
-Should you wish to run OMERO.web automatically, a `systemd.service` file could be created. See below an example file `omero-web-systemd.service`::
-
-    [Unit]
-    Description=OMERO.web
-    # Not mandatory, NGINX may be running on a different server
-    Requires=nginx.service
-    After=network.service
-
-    [Service]
-    User=omero-web
-    Type=forking
-    PIDFile=/opt/omero/web/omero-web/var/django.pid
-    Restart=no
-    RestartSec=10
-    Environment="PATH=/opt/omero/web/venv3/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin"
-    Environment="OMERODIR=/opt/omero/web/omero-web"
-    ExecStart=/opt/omero/web/venv3/bin/omero web start
-    ExecStop=/opt/omero/web/venv3/bin/omero web stop
-
-    [Install]
-    WantedBy=multi-user.target
 
 Copy the `systemd.service` file, then enable and start the service::
 
@@ -339,7 +338,7 @@ OMERO.web deployment can be configured with sync and async workers. **Sync worke
     .. note::
         Handling streaming request/responses requires proxy buffering
         to be turned off. For more details refer to
-        `Gunicorn deployment <https://docs.gunicorn.org/en/stable/deploy.html>`_
+        `Gunicorn deployment <https://gunicorn.org/deploy/>`_
         and
         `NGINX configuration <https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering>`_.
 
@@ -348,7 +347,7 @@ OMERO.web deployment can be configured with sync and async workers. **Sync worke
 
 
     See
-    `Gunicorn design <https://docs.gunicorn.org/en/stable/design.html>`_ for more details.
+    `Gunicorn design <https://gunicorn.org/design/>`_ for more details.
 
 
 
@@ -363,7 +362,7 @@ Install :pypi:`futures`::
 
 **The following steps are run as the omero-web system user.**
 
-To find out more about the number of worker threads for handling requests, see `Gunicorn threads <https://docs.gunicorn.org/en/stable/settings.html#threads>`_. Additional settings can be configured by changing the following properties::
+To find out more about the number of worker threads for handling requests, see `Gunicorn threads <https://gunicorn.org/design/#how-many-threads>`_. Additional settings can be configured by changing the following properties::
 
         omero config set omero.web.wsgi_worker_class
         omero config set omero.web.wsgi_threads $(2-4 x NUM_CORES)
@@ -383,7 +382,7 @@ Install `Gevent >= 0.13 <http://www.gevent.org/>`_::
 
 **The following steps are run as the omero-web system user.**
 
-To find out more about the maximum number of simultaneous clients, see `Gunicorn worker-connections <https://docs.gunicorn.org/en/stable/settings.html#worker-connections>`_. Additional settings can be configured by changing the following properties::
+To find out more about the maximum number of simultaneous clients, see `Gunicorn worker-connections <https://gunicorn.org/asgi/#worker-connections>`_. Additional settings can be configured by changing the following properties::
 
         omero config set omero.web.wsgi_worker_class gevent
         omero config set omero.web.wsgi_worker_connections 1000
@@ -400,11 +399,11 @@ SELinux
 If you are running a system with `SELinux enabled <https://wiki.centos.org/HowTos/SELinux>`_ and are unable to access OMERO.web you may need to adjust the security policy::
 
     if [ $(getenforce) != Disabled ]; then
-
-        yum -y install policycoreutils-python
+        dnf -y install policycoreutils-python-utils
         setsebool -P httpd_read_user_content 1
         setsebool -P httpd_enable_homedirs 1
         semanage port -a -t http_port_t -p tcp 4080
-
+        firewall-cmd --zone=public --add-port=4080/tcp --permanent
+        firewall-cmd --reload
     fi
 

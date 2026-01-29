@@ -1,13 +1,13 @@
 .. walkthroughs are generated using ansible, see 
 .. https://github.com/ome/omeroweb-install
 
-OMERO.web installation on Ubuntu 20.04 and IcePy 3.6
+OMERO.web installation on Ubuntu 22.04 and IcePy 3.6
 ====================================================
 
-Please first read :doc:`../../server-ubuntu2004-ice36`.
+Please first read :doc:`../../server-ubuntu2204-ice36`.
 
 
-This is an example walkthrough for installing OMERO.web in a **virtual environment** using a dedicated system user. Installing OMERO.web in a virtual environment is the preferred way. For convenience in this walkthrough, we will use the **omero-web system user** and define the main OMERO.web configuration options as environment variables. Since 5.6, a new :envvar:`OMERODIR` variable is used, you should first unset :envvar:`OMERO_HOME` (if set) before beginning the installation process. By default, Python 3.8 is installed.
+This is an example walkthrough for installing OMERO.web in a **virtual environment** using a dedicated system user. Installing OMERO.web in a virtual environment is the preferred way. For convenience in this walkthrough, we will use the **omero-web system user** and define the main OMERO.web configuration options as environment variables. Since 5.6, a new :envvar:`OMERODIR` variable is used, you should first unset :envvar:`OMERO_HOME` (if set) before beginning the installation process. By default, Python 3.10 is installed.
 
 
 **The following steps are run as root.**
@@ -19,8 +19,6 @@ If required, first create a local system user omero-web and create directory::
     mkdir -p /opt/omero/web/omero-web/etc/grid
     chown -R omero-web /opt/omero/web/omero-web
 
-
-
 Installing prerequisites
 ------------------------
 
@@ -30,6 +28,7 @@ Installing prerequisites
 Install dependencies::
 
     apt-get update
+    apt-get -y install git
 
     apt-get -y install unzip
     apt-get -y install python3
@@ -38,7 +37,7 @@ Install dependencies::
     apt-get -y install nginx
 
 
-*Optional*: if you wish to use the Redis cache, install Redis::
+*Recommended*: if you wish to use the Redis cache, install Redis::
 
     apt-get -y install redis-server
 
@@ -59,7 +58,7 @@ Create the virtual environment. This is the recommended way to install OMERO.web
 
 Install ZeroC IcePy 3.6::
 
-    /opt/omero/web/venv3/bin/pip install https://github.com/ome/zeroc-ice-ubuntu2004/releases/download/0.2.0/zeroc_ice-3.6.5-cp38-cp38-linux_x86_64.whl
+    /opt/omero/web/venv3/bin/pip install https://github.com/glencoesoftware/zeroc-ice-py-ubuntu2204-x86_64/releases/download/20221004/zeroc_ice-3.6.5-cp310-cp310-linux_x86_64.whl
 
 
 Upgrade pip and install OMERO.web::
@@ -153,7 +152,7 @@ Additional settings can be configured by changing the properties below. Before c
           processes to handle many requests per second.
 
     - :property:`omero.web.wsgi_args` Additional arguments. For more details
-      check `Gunicorn Documentation <https://docs.gunicorn.org/en/stable/settings.html>`_. For example to enable **debugging**, run the following command::
+      check `Gunicorn Documentation <https://gunicorn.org/reference/settings/>`_. For example to enable **debugging**, run the following command::
 
           omero config set omero.web.wsgi_args -- "--log-level=DEBUG --error-logfile=/opt/omero/web/omero-web/var/log/error.log"
 
@@ -216,13 +215,13 @@ Running OMERO.web
 Since OMERO.web 5.16.0, the package `whitenoise` is installed by default.
 
 
-*Optional*: Install `Django Redis <https://github.com/jazzband/django-redis>`_::
+*Recommended*: Install `Django Redis <https://github.com/jazzband/django-redis>`_::
 
     /opt/omero/web/venv3/bin/pip install 'django-redis==5.0.0'
 
 **The following steps are run as the omero-web system user.**
 
-*Optional*: Configure the cache::
+*Recommended*: Configure the cache::
 
     omero config set omero.web.caches '{"default": {"BACKEND": "django_redis.cache.RedisCache","LOCATION": "redis://127.0.0.1:6379/0"}}'
     omero config set omero.web.session_engine 'django.contrib.sessions.backends.cache'
@@ -252,8 +251,8 @@ Should you wish to run OMERO.web automatically, a `init.d` file could be created
     #
     ### BEGIN INIT INFO
     # Provides:             omero-web
-    # Required-Start:       $local_fs $remote_fs $network $time omero postgresql
-    # Required-Stop:        $local_fs $remote_fs $network $time omero postgresql
+    # Required-Start:       $local_fs $remote_fs $network $time omero
+    # Required-Stop:        $local_fs $remote_fs $network $time omero
     # Default-Start:        2 3 4 5
     # Default-Stop:         0 1 6
     # Short-Description:    OMERO.web
@@ -391,7 +390,7 @@ OMERO.web deployment can be configured with sync and async workers. **Sync worke
     .. note::
         Handling streaming request/responses requires proxy buffering
         to be turned off. For more details refer to
-        `Gunicorn deployment <https://docs.gunicorn.org/en/stable/deploy.html>`_
+        `Gunicorn deployment <https://gunicorn.org/deploy/>`_
         and
         `NGINX configuration <https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering>`_.
 
@@ -400,7 +399,7 @@ OMERO.web deployment can be configured with sync and async workers. **Sync worke
 
 
     See
-    `Gunicorn design <https://docs.gunicorn.org/en/stable/design.html>`_ for more details.
+    `Gunicorn design <https://gunicorn.org/design/>`_ for more details.
 
 
 
@@ -415,7 +414,7 @@ Install :pypi:`futures`::
 
 **The following steps are run as the omero-web system user.**
 
-To find out more about the number of worker threads for handling requests, see `Gunicorn threads <https://docs.gunicorn.org/en/stable/settings.html#threads>`_. Additional settings can be configured by changing the following properties::
+To find out more about the number of worker threads for handling requests, see `Gunicorn threads <https://gunicorn.org/design/#how-many-threads>`_. Additional settings can be configured by changing the following properties::
 
         omero config set omero.web.wsgi_worker_class
         omero config set omero.web.wsgi_threads $(2-4 x NUM_CORES)
@@ -435,7 +434,7 @@ Install `Gevent >= 0.13 <http://www.gevent.org/>`_::
 
 **The following steps are run as the omero-web system user.**
 
-To find out more about the maximum number of simultaneous clients, see `Gunicorn worker-connections <https://docs.gunicorn.org/en/stable/settings.html#worker-connections>`_. Additional settings can be configured by changing the following properties::
+To find out more about the maximum number of simultaneous clients, see `Gunicorn worker-connections <https://gunicorn.org/asgi/#worker-connections>`_. Additional settings can be configured by changing the following properties::
 
         omero config set omero.web.wsgi_worker_class gevent
         omero config set omero.web.wsgi_worker_connections 1000
