@@ -362,7 +362,7 @@ Install :pypi:`futures`::
 
 **The following steps are run as the omero-web system user.**
 
-To find out more about the number of worker threads for handling requests, see `Gunicorn threads <https://docs.gunicorn.org/en/stable/settings.html#threads>`_. Additional settings can be configured by changing the following properties::
+To find out more about the number of worker threads for handling requests, see `Gunicorn threads <https://gunicorn.org/design/#how-many-threads>`_. Additional settings can be configured by changing the following properties::
 
         omero config set omero.web.wsgi_worker_class
         omero config set omero.web.wsgi_threads $(2-4 x NUM_CORES)
@@ -382,7 +382,7 @@ Install `Gevent >= 0.13 <http://www.gevent.org/>`_::
 
 **The following steps are run as the omero-web system user.**
 
-To find out more about the maximum number of simultaneous clients, see `Gunicorn worker-connections <https://docs.gunicorn.org/en/stable/settings.html#worker-connections>`_. Additional settings can be configured by changing the following properties::
+To find out more about the maximum number of simultaneous clients, see `Gunicorn worker-connections <https://gunicorn.org/asgi/#worker-connections>`_. Additional settings can be configured by changing the following properties::
 
         omero config set omero.web.wsgi_worker_class gevent
         omero config set omero.web.wsgi_worker_connections 1000
