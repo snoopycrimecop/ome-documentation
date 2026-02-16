@@ -11,6 +11,9 @@
 #    - check version of the dependencies
 
 PREFIX="omero-"
+WORKSPACE=${WORKSPACE:-$(pwd)}
+WORKSPACE=${WORKSPACE%/}  # Remove trailing slashes
+export OMERODIR=${WORKSPACE}/OMERO.server
 
 # General java packages
 # Java packages
@@ -60,38 +63,24 @@ done
 echo $new_version
 
 # Java packages
-
-# the version of GitHub does not match the version in omero/conf_autogen.py
-# Download the latest server release
-# Unzip
 # Determine the version of the dependencies
 # Update omero/conf_autogen.py
-if [ ! -z $new_version ]; then
-    # Download the latest binary to make we have the correct one.
-    # To be replaced by the GitHub url without build number when ready
-    SERVER=https://downloads.openmicroscopy.org/omero/5.6/server-ice36.zip
-    wget $SERVER -O OMERO.server-ice36.zip
-    unzip -q OMERO.server*
-    ln -s OMERO.server-*/ OMERO.server
-    dirs=("OMERO.server/lib/server/omero-blitz.jar" "OMERO.server/lib/server/omero-server.jar" "OMERO.server/lib/server/omero-gateway.jar"
-      "OMERO.server/lib/server/omero-romio.jar" "OMERO.server/lib/server/omero-renderer.jar" "OMERO.server/lib/server/omero-common.jar"
-      "OMERO.server/lib/server/omero-model.jar" "OMERO.server/lib/server/formats-gpl.jar")
-    for dir in "${dirs[@]}"
-    do
-        :
-        values=(${dir//// })
-        value=${values[${#values[@]}-1]}
-        y=${value#"$PREFIX"}
-        v=${y%%.jar}
-        v=${v//"-"/"_"}
-        version=`unzip -p $dir META-INF/MANIFEST.MF | grep "Implementation-Version:" | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
-        sed -i -e "s/version_${v} = .*/version_${v} = \"${version}\"/" omero/conf_autogen.py
-        echo $v
-        echo $version
-    done
-    # clean up 
-    rm -rf OMERO.server*
-fi
+dirs=("$OMERODIR/lib/server/omero-blitz.jar" "$OMERODIR/lib/server/omero-server.jar" "$OMERODIR/lib/server/omero-gateway.jar"
+  "$OMERODIR/lib/server/omero-romio.jar" "$OMERODIR/lib/server/omero-renderer.jar" "$OMERODIR/lib/server/omero-common.jar"
+  "$OMERODIR/lib/server/omero-model.jar" "$OMERODIR/lib/server/formats-gpl.jar")
+for dir in "${dirs[@]}"
+do
+    :
+    values=(${dir//// })
+    value=${values[${#values[@]}-1]}
+    y=${value#"$PREFIX"}
+    v=${y%%.jar}
+    v=${v//"-"/"_"}
+    version=`unzip -p $dir META-INF/MANIFEST.MF | grep "Implementation-Version:" | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
+    sed -i -e "s/version_${v} = .*/version_${v} = \"${version}\"/" omero/conf_autogen.py
+    echo $v
+    echo $version
+done
 
 
 # Python packages
