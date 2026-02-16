@@ -1447,7 +1447,7 @@ pixeldata processing.
   Cron Format: seconds minutes hours day-of-month month day-of-week year
   (optional). For example, "0,30 * * * * ?" is equivalent to running every
   30 seconds. See
-  https://www.quartz-scheduler.org/api/1.8.6/org/quartz/CronExpression.html
+  https://www.quartz-scheduler.org/api/2.4.x/org/quartz/CronExpression.html
 
 .. _Quartz Job Scheduler:
   https://www.quartz-scheduler.org/downloads/
