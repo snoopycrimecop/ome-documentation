@@ -432,9 +432,7 @@ Jenkins links
 =============
 
 Links to the continuous integration server can be created using the 
-``jenkins`` alias for the main server, e.g. ``:jenkins: `Jenkins server <>```,
-the ``jenkinsjob`` alias for a given job, e.g. ``:jenkinsjob: `OMERO-4.4``` or
-the ``jenkinsview`` alias for a given view, e.g. ``:jenkinsview: `4.4```.
+``mergeci`` alias for the main server, e.g. ``:mergeci: `Jenkins server <>```.
 
 Mailing-list links
 ==================

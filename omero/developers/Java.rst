@@ -32,7 +32,7 @@ Extended classpath
 ------------------
 
 To use the importer, you will need more jar files. To see all the
-current requirements, take a look at the builds on :jenkins:`Jenkins
+current requirements, take a look at the builds on :mergeci:`Jenkins
 <>`, or alternatively examine the dependencies in the :file:`build.gradle`
 files (e.g. :insight_source:`build.gradle`).
 

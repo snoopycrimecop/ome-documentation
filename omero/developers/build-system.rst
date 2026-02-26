@@ -192,7 +192,7 @@ Jenkins
 ^^^^^^^
 
 The OME project currently uses Jenkins_ as
-a continuous integration server available :jenkins:`here <>`, so many
+a continuous integration server available :mergeci:`here <>`, so many
 binary packages can be downloaded without compiling them yourself. See the :devs_doc:`Continuous Integration documentation <ci-omero.html>` for further details.
 
 Server build
