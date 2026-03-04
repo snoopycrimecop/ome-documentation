@@ -7,7 +7,7 @@ libraries.
 From OMERO 5.6.0 release, the client library ``omero-py`` supports Python 3 and
 is now available on PyPI_ and Conda_. The ``omero-py`` API documentation is available at https://omero-py.readthedocs.io/.
 We recommend you use a Python virtual environment to install the client library. You can create one using either ``venv``, ``conda`` or ``mamba``.
-Before installing ``omero-py``, we recommend to install the `Zeroc IcePy 3.6 <https://zeroc.com/ice/downloads/3.6>`_ Python bindings.
+Before installing ``omero-py``, we recommend to install the `Zeroc IcePy 3.6 <https://zeroc.com/ice/downloads/archive/3.6>`_ Python bindings.
 
 Our commercial partner `Glencoe Software <https://www.glencoesoftware.com>`_ has produced several Python wheels to install the Ice-Python bindings depending on the desired Python version and the operating system. Please visit the `Ice binaries for omero <https://www.glencoesoftware.com/blog/2023/12/08/ice-binaries-for-omero.html>`_ page to find the full URLs to the wheels that are used in the examples below.
  

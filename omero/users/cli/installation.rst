@@ -15,7 +15,7 @@ to install it first, see `miniconda <https://docs.conda.io/en/latest/miniconda.h
 
 .. Note:: On Ubuntu 20.04, you may need to install ``libssl-dev`` before installing the |CLI|.
 
-Before installing ``omero-py``, we recommend to install the `Zeroc IcePy 3.6 <https://zeroc.com/ice/downloads/3.6>`_ Python bindings.
+Before installing ``omero-py``, we recommend to install the `Zeroc IcePy 3.6 <https://zeroc.com/ice/downloads/archive/3.6>`_ Python bindings.
 
 Our commercial partner `Glencoe Software <https://www.glencoesoftware.com>`_ has produced several Python wheels to install the Ice-Python bindings depending on the desired Python version and the operating system. Please visit the `Ice binaries for omero <https://www.glencoesoftware.com/blog/2023/12/08/ice-binaries-for-omero.html>`_ page to find the full URLs to the wheels that are used in the examples below.
 
