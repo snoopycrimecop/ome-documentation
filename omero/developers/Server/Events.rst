@@ -38,4 +38,4 @@ action.
 --------------
 
 .. seealso:: 
-    ` Hibernate events <https://docs.jboss.org/hibernate/core/3.6/reference/en-US/html/events.html>`_
+    `Hibernate events <https://docs.hibernate.org/core/3.6/reference/en-US/html/events.html>`_
