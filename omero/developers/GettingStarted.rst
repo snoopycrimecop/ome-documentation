@@ -232,7 +232,7 @@ HQL examples
 HQL is used for Query Service queries (see above). Some examples,
 coupled with the references for the :doc:`OMERO model
 <Model/EveryObject>` and `HQL syntax
-<https://docs.jboss.org/hibernate/orm/3.6/reference/en-US/html/queryhql.html>`_
+<https://docs.hibernate.org/orm/3.6/reference/en-US/html/queryhql.html>`_
 should get you going, along with notes about object loading on the
 |OmeroModel| page.
 
