@@ -164,7 +164,7 @@ Compound Filters
 ^^^^^^^^^^^^^^^^
 
 .. note:: OMERO uses standard
-    `RFC 2254 LDAP filters <http://www.faqs.org/rfcs/rfc2254.html>`_, so they
+    `RFC 2254 LDAP filters <https://www.rfc-editor.org/rfc/rfc2254>`_, so they
     must conform to that syntax and are only able to do what those filters can
     do. You can test the filters via ldapsearch on your OMERO server (assuming
     you have the OpenLDAP binaries installed).
