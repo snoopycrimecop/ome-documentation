@@ -347,7 +347,8 @@ linkcheck_ignore += [
     r'https://java.com/.*',
     r'https://www.cpubenchmark.net/*',
     r'https://www.mathworks.com/.*',
-    r'https://bugs.java.com/.*' # 403 Client Error: Forbidden for url
+    r'https://bugs.java.com/.*', # 403 Client Error: Forbidden for url
+    r'https://www.janelia.org/.*' # behind captcha
 ]
 
 exclude_patterns = ['sysadmins/unix/walkthrough/requirements*',
