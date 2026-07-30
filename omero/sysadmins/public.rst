@@ -64,8 +64,8 @@ To set this up on your OMERO.web installation:
      $ omero config set omero.web.public.password '<password>'
 
 - By default the public user is only allowed to perform GET requests.
-  (There are limited built-in exceptions allowing POST requests for certain
-  URLs that require it, but do not write or modify any data.) This
+  There are limited built-in exceptions allowing POST requests for certain
+  URLs that require it, but do not write or modify any data. This
   means that the public user will not be able to Create, Edit or Delete data,
   as these require POST requests.
   If you want to allow these actions from the public user, you can change the
