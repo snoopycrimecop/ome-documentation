@@ -398,7 +398,7 @@ which passes the inputs all the way down to :file:`processor.py` will need
 to have a sufficiently large ``Ice.MessageSizeMax`` for: the client, the
 Glacier2 router, the :doc:`/developers/server-blitz` server, and the Processor.
 
-The default is currently set to 65536 kilobytes which is 64MB.
+The default is currently set to 256MB (250000KiB).
 
 Logging
 ^^^^^^^
