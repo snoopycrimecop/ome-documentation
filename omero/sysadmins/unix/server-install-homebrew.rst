@@ -2,10 +2,14 @@ OMERO.server installation on OS X with Homebrew
 ===============================================
 
 
-.. note::
-   :title: Deprecated workflow
+.. note:: Deprecated workflow
 
-   This workflow is deprecated and not tested regularly. Also, it does not work on Apple Silicon Macs. If you need a local OMERO.server for development, use the official `Docker image <https://github.com/ome/omero-server-docker>`_, possibly in `docker-compose setup <https://github.com/ome/docker-example-omero/blob/master/DEV_README.md>`.
+   This workflow is deprecated and not regularly tested. It does not
+   work on Apple Silicon Macs (M1, M2, etc.). For a local OMERO.server
+   development environment, use the official `Docker image
+   <https://github.com/ome/omero-server-docker>`_, possibly with the
+   `docker-compose setup
+   <https://github.com/ome/docker-example-omero/blob/master/DEV_README.md>`_.
 
 
 .. topic:: Overview
