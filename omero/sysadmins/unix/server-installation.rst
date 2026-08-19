@@ -30,13 +30,6 @@ Since 5.6, a new :envvar:`OMERODIR` variable is used, you should first unset :en
   Instructions for installing OMERO.server from scratch on
   Ubuntu 22.04 with Ice 3.6 and Python 3.10.
 
-**Development:**
-
-:doc:`server-install-homebrew`
-  Instructions for installing and building OMERO.server on Mac
-  OS X with dependencies installed using Homebrew. It is aimed at **developers**
-  since typically MacOS X is not suited for serious server deployment.
-
 .. toctree::
     :maxdepth: 1
     :titlesonly:
