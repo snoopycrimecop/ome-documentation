@@ -1,6 +1,17 @@
 OMERO.server installation on OS X with Homebrew
 ===============================================
 
+
+.. note:: Deprecated workflow
+
+   This workflow is deprecated and no longer tested. It does not
+   work on Apple Silicon Macs (M1, M2, etc.). For a local OMERO.server
+   development environment, use the official `Docker image
+   <https://github.com/ome/omero-server-docker>`_, possibly with the
+   `docker-compose setup
+   <https://github.com/ome/docker-example-omero/blob/master/DEV_README.md>`_.
+
+
 .. topic:: Overview
 
     This walkthrough demonstrates how to install OMERO on a clean Mac
@@ -427,9 +438,6 @@ to reinitialize a PostgreSQL database cluster as::
 
     $ rm -rf /usr/local/var/postgres
     $ initdb -E UTF8 /usr/local/var/postgres
-
-.. seealso::
-  https://stackoverflow.com/questions/25970132/pg-tblspc-missing-after-installation-of-latest-version-of-os-x-yosemite-or-el
 
 szip
 ^^^^
